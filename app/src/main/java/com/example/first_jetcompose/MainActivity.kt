@@ -1,6 +1,7 @@
 package com.example.first_jetcompose
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color.parseColor
 import android.os.Bundle
 import android.widget.Toast
@@ -22,6 +23,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
@@ -32,12 +34,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FirstjetcomposeTheme {
-                Surface(modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background) {  // A surface container using the 'background' color from the theme
-                    Column(modifier = Modifier.fillMaxSize().padding(5.dp)) {
-                        Conversation(SampleData.conversationSample)
-                    } // Column
-                } // Surface
+                TitleContent()
             } // FirstjetcomposeTheme
         } // setContent
     }
@@ -45,24 +42,78 @@ class MainActivity : ComponentActivity() {
 
 data class Message(val author:String,val body:String)
 
+@Preview
+@Composable
+fun TitleContent() {
+    val mContext = LocalContext.current // Fetching the local context for using the Toast
+    Scaffold(
+        topBar = { TopAppBar(
+                title = {
+                    Text(
+                        text = "Home",
+                        color = Color.Black,
+                        fontFamily = FontFamily.Cursive,
+                    ) },
+                backgroundColor = Color(0xff0f9d58)) },
+        content = {
+            Column {
+                Button(
+                    onClick = {
+                        mContext.startActivity(Intent(mContext,
+                            SecondActivity::class.java))
+                    },
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))
+                ) {
+                    Text("Go to Second Activity", color = Color.White)
+                }
+                HomeContent()
+            }
+        })
+}
+
+@Composable
+fun HomeContent() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colors.background
+    ) {  // A surface container using the 'background' color from the theme
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp)) {
+            Conversation(SampleData.conversationSample)
+        } // Column
+    } // Surface
+}
+
 @Composable
 fun MessageCard(msg:Message) {
     val mContext = LocalContext.current // Fetching the local context for using the Toast
     Row(
-        modifier = Modifier.padding(5.dp).fillMaxWidth()
+        modifier = Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
             .shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))
-            .background("#a0ca74".color).clickable { mToast(mContext) },
+            .background("#a0ca74".color)
+            .clickable { mToast(mContext) },
         horizontalArrangement = Arrangement.Center,
     ) {
         Image(painter = painterResource(id = R.drawable.ic_launcher_foreground),
             contentDescription = null,
-            modifier = Modifier.padding(5.dp).background(Color.LightGray, shape = CircleShape)
+            modifier = Modifier
+                .padding(5.dp)
+                .background(Color.LightGray, shape = CircleShape)
                 .border(2.dp, MaterialTheme.colors.secondary, CircleShape))
+
         Spacer(modifier = Modifier.width(8.dp)) // Add a horizontal space between the image and the column
         var isExpanded by remember { mutableStateOf(false) } // We keep track if the message is expanded or not in this variable
+
         // surfaceColor will be updated gradually from one color to the other
         val surfaceColor by animateColorAsState(if (isExpanded) MaterialTheme.colors.primary else MaterialTheme.colors.surface)
-        Column(modifier = Modifier.align(Alignment.CenterVertically)
+
+        Column(modifier = Modifier
+            .align(Alignment.CenterVertically)
             .clickable { isExpanded = !isExpanded }) {
             Text(text = msg.author,
                 color = MaterialTheme.colors.primaryVariant,
@@ -71,7 +122,9 @@ fun MessageCard(msg:Message) {
             Spacer(modifier = Modifier.height(4.dp)) // Add a vertical space between the author and message texts
             Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp,
                 color = surfaceColor,
-                modifier = Modifier.animateContentSize().padding(1.dp)
+                modifier = Modifier
+                    .animateContentSize()
+                    .padding(1.dp)
             ) {
                 Text(text = msg.body,
                     style = MaterialTheme.typography.body1,
@@ -93,14 +146,6 @@ private fun mToast(context: Context) {
 fun Conversation(message:List<Message>) {
     LazyColumn {
         items(message) { MessageCard(msg = it) }
-    }
-}
-
-@Preview
-@Composable
-fun PreviewConversation() {
-    FirstjetcomposeTheme {
-        Conversation(SampleData.conversationSample)
     }
 }
 
