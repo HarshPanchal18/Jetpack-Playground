@@ -3,6 +3,7 @@ package com.example.first_jetcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
@@ -55,6 +56,15 @@ fun Greetings(
 
 @Composable
 fun Greeting(name: String) {
+    Card(backgroundColor = MaterialTheme.colors.primary,
+        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+    ) {
+        CardContent(name)
+    }
+}
+
+@Composable
+fun CardContent(name: String) {
     var expanded by remember { mutableStateOf(false) } // State and MutableState are interfaces that hold some value and trigger UI updates (recompositions) whenever that value changes.
     // remember is used to guard against recomposition, so the state is not reset.
     /*
@@ -76,43 +86,47 @@ fun Greeting(name: String) {
             animate*AsState restarts the animation and points to the new value.
             Interruptions look especially natural with spring-based animations
             */
-            dampingRatio = Spring.DampingRatioHighBouncy,
-            stiffness = Spring.StiffnessHigh
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
         )
     )
 
-    Surface(color=MaterialTheme.colors.primary,
-        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+    Row(modifier = Modifier
+        .padding(12.dp)
+        .animateContentSize(
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            )
+        )
     ) {
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(24.dp)
+        Column(modifier = Modifier
+            .weight(1f)
+            .padding(bottom = extraPadding.coerceAtLeast(0.dp))
         ) {
-            Column(modifier = Modifier
-                .weight(1f)
-                .padding(bottom = extraPadding.coerceAtLeast(0.dp))
-            ) {
-                Text(text = "Hello ")
-                Text(text = "$name!",
-                    style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraBold))
-            }
-            IconButton(onClick = { expanded = !expanded }) {
-                Icon(imageVector =
-                    if (expanded)
-                        Icons.Filled.ExpandLess
-                    else
-                        Icons.Filled.ExpandMore,
-                    contentDescription =
-                    if (expanded)
-                        stringResource(R.string.show_less)
-                     else
-                        stringResource(R.string.show_more)
-                )
-                /*Text(text = if(expanded.value) "Show less" else "Show more",
-                    color = Color.Black)*/
+            Text(text = "Hello ")
+            Text(text = "$name!",
+                style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraBold))
+            if(expanded) {
+                Text(text = ("Composem ipsum color sit lazy, " +
+                        "padding theme elit, sed do bouncy.\n").repeat(4))
             }
         }
+        IconButton(onClick = { expanded = !expanded }) {
+            Icon(imageVector =
+            if (expanded)
+                Icons.Filled.ExpandLess
+            else
+                Icons.Filled.ExpandMore,
+                contentDescription =
+                if (expanded)
+                    stringResource(R.string.show_less)
+                else
+                    stringResource(R.string.show_more)
+            )
+        }
     }
+    //}
 }
 
 @Preview
