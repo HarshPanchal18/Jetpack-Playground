@@ -65,8 +65,20 @@ fun TitleContent() {
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))
                 ) {
-                    Text("Go to Second Activity", color = Color.White)
+                    Text("Go to Expand Activity", color = Color.White)
                 }
+
+                Button(
+                    onClick = {
+                        mContext.startActivity(Intent(mContext,
+                            BorderActivity::class.java))
+                    },
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))
+                ) {
+                    Text("Go to Button Activity", color = Color.White)
+                }
+
                 HomeContent()
             }
         })

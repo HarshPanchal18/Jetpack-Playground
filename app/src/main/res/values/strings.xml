@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">first-jetcompose</string>
-    <string name="title_activity_second">SecondActivity</string>
+    <string name="title_activity_second">Second Activity</string>
     <string name="show_less">Show less</string>
     <string name="show_more">Show more</string>
+    <string name="title_activity_button">Border Activity</string>
 </resources>
