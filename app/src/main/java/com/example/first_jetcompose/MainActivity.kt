@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalComposeUiApi::class)
+
 package com.example.first_jetcompose
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color.parseColor
@@ -18,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -57,27 +61,17 @@ fun TitleContent() {
                 backgroundColor = Color(0xff0f9d58)) },
         content = {
             Column {
-                Button(
-                    onClick = {
-                        mContext.startActivity(Intent(mContext,
-                            SecondActivity::class.java))
-                    },
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))
-                ) {
-                    Text("Go to Expand Activity", color = Color.White)
-                }
+                StartActivityButton(text = "Expand Activity",
+                    intentActivity = SecondActivity::class.java,
+                    mContext = mContext)
 
-                Button(
-                    onClick = {
-                        mContext.startActivity(Intent(mContext,
-                            BorderActivity::class.java))
-                    },
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))
-                ) {
-                    Text("Go to Button Activity", color = Color.White)
-                }
+                StartActivityButton(text = "Corner Activity",
+                    intentActivity = BorderActivity::class.java,
+                    mContext = mContext)
+
+                StartActivityButton(text = "Drag Activity",
+                    intentActivity = DraggableActivity::class.java,
+                    mContext = mContext)
 
                 HomeContent()
             }
@@ -158,6 +152,26 @@ private fun mToast(context: Context) {
 fun Conversation(message:List<Message>) {
     LazyColumn {
         items(message) { MessageCard(msg = it) }
+    }
+}
+
+@Composable
+fun StartActivityButton(
+    text: String,
+    intentActivity: Class<out Activity>,
+    mContext: Context
+) {
+    Button(
+        onClick = {
+            mContext.startActivity(Intent(mContext, intentActivity))
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+            //.align(Alignment.CenterHorizontally),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))
+    ) {
+        Text(text = text, color = Color.White)
     }
 }
 

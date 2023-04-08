@@ -19,6 +19,11 @@
             android:label="@string/title_activity_button"
             android:theme="@style/Theme.Firstjetcompose" />
         <activity
+            android:name=".DraggableActivity"
+            android:exported="false"
+            android:label="@string/title_activity_button"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
             android:name=".SecondActivity"
             android:exported="false"
             android:label="@string/title_activity_second"
