@@ -62,16 +62,16 @@ fun TitleContent() {
         content = {
             Column {
                 StartActivityButton(text = "Expand Activity",
-                    intentActivity = SecondActivity::class.java,
-                    mContext = mContext)
+                    intentActivity = SecondActivity::class.java)
 
                 StartActivityButton(text = "Corner Activity",
-                    intentActivity = BorderActivity::class.java,
-                    mContext = mContext)
+                    intentActivity = BorderActivity::class.java)
 
                 StartActivityButton(text = "Drag Activity",
-                    intentActivity = DraggableActivity::class.java,
-                    mContext = mContext)
+                    intentActivity = DraggableActivity::class.java)
+
+                StartActivityButton(text = "Row Grid Activity",
+                    intentActivity = LazyGrid::class.java)
 
                 HomeContent()
             }
@@ -159,7 +159,7 @@ fun Conversation(message:List<Message>) {
 fun StartActivityButton(
     text: String,
     intentActivity: Class<out Activity>,
-    mContext: Context
+    mContext: Context = LocalContext.current
 ) {
     Button(
         onClick = {
