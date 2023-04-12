@@ -49,9 +49,9 @@ data class Message(val author:String,val body:String)
 @Preview
 @Composable
 fun TitleContent() {
-    val mContext = LocalContext.current // Fetching the local context for using the Toast
     Scaffold(
-        topBar = { TopAppBar(
+        topBar = {
+            TopAppBar(
                 title = {
                     Text(
                         text = "Home",
@@ -72,6 +72,9 @@ fun TitleContent() {
 
                 StartActivityButton(text = "Row Grid Activity",
                     intentActivity = LazyGrid::class.java)
+
+                StartActivityButton(text = "Graphics Layer Activity",
+                    intentActivity = GraphicsLayer::class.java)
 
                 HomeContent()
             }
@@ -159,7 +162,7 @@ fun Conversation(message:List<Message>) {
 fun StartActivityButton(
     text: String,
     intentActivity: Class<out Activity>,
-    mContext: Context = LocalContext.current
+    mContext: Context = LocalContext.current // Fetching the local context for using the Toast
 ) {
     Button(
         onClick = {

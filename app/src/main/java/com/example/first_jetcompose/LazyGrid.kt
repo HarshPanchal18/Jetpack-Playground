@@ -63,25 +63,3 @@ private fun LazyGridScreen() {
         }
     }
 }
-
-@Composable
-@Preview
-private fun Circle() {
-    Scaffold {
-        Box {
-            Box(
-                modifier = Modifier
-                    .size(200.dp)
-                    .clip(CircleShape)
-                    .background(Color.DarkGray)
-            )
-            Box(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .size(180.dp)
-                    .clip(CircleShape)
-                    .background(Color.Red)
-            )
-        }
-    }
-}
