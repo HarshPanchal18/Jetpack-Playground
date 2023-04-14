@@ -17,8 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
 
 class GraphicsLayer : ComponentActivity() {
@@ -59,17 +68,50 @@ private fun GraphicsLayerScreen() {
             GraphicsLayerRotationZ()
             GraphicsLayerCameraDistance()
             GraphicsLayerTransformOrigin()
+            CustomText()
+            CustomText3()
         }
     }
 }
 
 @Composable
 fun GraphicsLayerScaleX() {
-    Text(stringResource(id = R.string.app_name),
-        Modifier.graphicsLayer(
-            scaleX = 1.5f,
-            clip = true
-        ))
+    Text(
+        text = stringResource(id = R.string.app_name),
+        Modifier
+            .graphicsLayer(
+                scaleX = 1.5f,
+                clip = true,
+            )
+            .width(200.dp),
+        fontWeight = FontWeight.SemiBold,
+        fontStyle = FontStyle.Italic,
+        textAlign = TextAlign.Justify
+    )
+}
+
+@Composable
+fun CustomText() {
+    Text(
+        buildAnnotatedString {
+            withStyle(ParagraphStyle(textAlign = TextAlign.Center)
+            ) {
+                withStyle(SpanStyle(color = MaterialTheme.colors.primary,
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold)) {
+                    append("A")
+                }
+                append("B")
+                append("C")
+                append("D")
+            }
+        }, modifier = Modifier.width(200.dp)
+    )
+}
+
+@Composable
+fun CustomText3() {
+    Text("Hello World! ".repeat(30), maxLines = 2, overflow = TextOverflow.Ellipsis)
 }
 
 @Composable
@@ -150,7 +192,7 @@ fun GraphicsLayerCameraDistance() {
         Modifier.graphicsLayer(
             cameraDistance = 16f,
             clip = true
-    ))
+        ))
 }
 
 @Composable
@@ -159,5 +201,5 @@ fun GraphicsLayerTransformOrigin() {
         Modifier.graphicsLayer(
             transformOrigin = TransformOrigin(2f, 2f),
             clip = true
-    ))
+        ))
 }
