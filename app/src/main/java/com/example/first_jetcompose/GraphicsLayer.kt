@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.DisableSelection
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -22,6 +24,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
@@ -52,7 +55,7 @@ private fun GraphicsLayerScreen() {
         Column(modifier = Modifier
             .background("#aa54a2da".color)
             .fillMaxSize()
-            .padding(vertical = 42.dp)
+            .padding(vertical = 22.dp)
             .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -70,6 +73,66 @@ private fun GraphicsLayerScreen() {
             GraphicsLayerTransformOrigin()
             CustomText()
             CustomText3()
+            CustomTextSelection()
+            SuperScriptText("Hello ", "World")
+            SubScriptText("Hello ", "World")
+        }
+    }
+}
+
+@Composable
+fun SubScriptText(normalText: String, subText: String) {
+    Text(buildAnnotatedString {
+        withStyle(
+            SpanStyle(
+                fontSize = MaterialTheme.typography.subtitle1.fontSize
+            )
+        ) {
+            append(normalText)
+        }
+        withStyle(
+            SpanStyle(
+                fontSize = MaterialTheme.typography.overline.fontSize,
+                fontWeight = FontWeight.Normal,
+                baselineShift = BaselineShift.Subscript
+            )
+        ) {
+            append(subText)
+        }
+    })
+}
+
+@Composable
+fun SuperScriptText(normalText: String, superText: String) {
+    Text(buildAnnotatedString {
+        withStyle(
+            SpanStyle(
+                fontSize = MaterialTheme.typography.subtitle1.fontSize
+            )
+        ) {
+            append(normalText)
+        }
+        withStyle(
+            SpanStyle(
+                fontSize = MaterialTheme.typography.overline.fontSize,
+                fontWeight = FontWeight.Normal,
+                baselineShift = BaselineShift.Superscript
+            )
+        ) {
+            append(superText)
+        }
+    })
+}
+
+@Composable
+fun CustomTextSelection() {
+    SelectionContainer {
+        Column {
+            Text("Hello World!0")
+            DisableSelection {
+                Text("Hello World!1")
+            }
+            Text("Hello World!2")
         }
     }
 }
