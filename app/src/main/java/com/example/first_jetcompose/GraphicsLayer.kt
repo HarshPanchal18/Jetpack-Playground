@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
@@ -74,7 +75,7 @@ private fun GraphicsLayerScreen() {
             CustomText()
             CustomText3()
             CustomTextSelection()
-            SuperScriptText("Hello ", "World")
+            SuperScriptText(normalText = "Hello ", superText = "World", superTextWeight = FontWeight.Light)
             SubScriptText("Hello ", "World")
         }
     }
@@ -103,19 +104,25 @@ fun SubScriptText(normalText: String, subText: String) {
 }
 
 @Composable
-fun SuperScriptText(normalText: String, superText: String) {
+fun SuperScriptText(
+    normalText: String,
+    normalTextSize: TextUnit = MaterialTheme.typography.subtitle1.fontSize,
+    superText: String,
+    superTextSize: TextUnit = MaterialTheme.typography.overline.fontSize,
+    superTextWeight: FontWeight = FontWeight.Normal
+) {
     Text(buildAnnotatedString {
         withStyle(
             SpanStyle(
-                fontSize = MaterialTheme.typography.subtitle1.fontSize
+                fontSize = normalTextSize
             )
         ) {
             append(normalText)
         }
         withStyle(
             SpanStyle(
-                fontSize = MaterialTheme.typography.overline.fontSize,
-                fontWeight = FontWeight.Normal,
+                fontSize = superTextSize,
+                fontWeight = superTextWeight,
                 baselineShift = BaselineShift.Superscript
             )
         ) {

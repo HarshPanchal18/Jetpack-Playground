@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-data class Message(val author:String,val body:String)
+data class Message(val author: String, val body: String)
 
 @Preview
 @Composable
@@ -57,24 +57,37 @@ fun TitleContent() {
                         text = "Home",
                         color = Color.Black,
                         fontFamily = FontFamily.Cursive,
-                    ) },
-                backgroundColor = Color(0xff0f9d58)) },
+                    )
+                },
+                backgroundColor = Color(0xff0f9d58)
+            )
+        },
         content = {
             Column {
-                StartActivityButton(text = "Expand Activity",
-                    intentActivity = SecondActivity::class.java)
+                StartActivityButton(
+                    text = "Expand Activity",
+                    intentActivity = SecondActivity::class.java
+                )
 
-                StartActivityButton(text = "Corner Activity",
-                    intentActivity = BorderActivity::class.java)
+                StartActivityButton(
+                    text = "Corner Activity",
+                    intentActivity = BorderActivity::class.java
+                )
 
-                StartActivityButton(text = "Drag Activity",
-                    intentActivity = DraggableActivity::class.java)
+                StartActivityButton(
+                    text = "Drag Activity",
+                    intentActivity = DraggableActivity::class.java
+                )
 
-                StartActivityButton(text = "Row Grid Activity",
-                    intentActivity = LazyGrid::class.java)
+                StartActivityButton(
+                    text = "Row Grid Activity",
+                    intentActivity = LazyGrid::class.java
+                )
 
-                StartActivityButton(text = "Graphics Layer Activity",
-                    intentActivity = GraphicsLayer::class.java)
+                StartActivityButton(
+                    text = "Graphics Layer Activity",
+                    intentActivity = GraphicsLayer::class.java
+                )
 
                 HomeContent()
             }
@@ -90,14 +103,15 @@ fun HomeContent() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp)) {
+                .padding(5.dp)
+        ) {
             Conversation(SampleData.conversationSample)
         } // Column
     } // Surface
 }
 
 @Composable
-fun MessageCard(msg:Message) {
+fun MessageCard(msg: Message) {
     val mContext = LocalContext.current // Fetching the local context for using the Toast
     Row(
         modifier = Modifier
@@ -108,12 +122,14 @@ fun MessageCard(msg:Message) {
             .clickable { mToast(mContext) },
         horizontalArrangement = Arrangement.Center,
     ) {
-        Image(painter = painterResource(id = R.drawable.ic_launcher_foreground),
+        Image(
+            painter = painterResource(id = R.drawable.ic_launcher_foreground),
             contentDescription = null,
             modifier = Modifier
                 .padding(5.dp)
                 .background(Color.LightGray, shape = CircleShape)
-                .border(2.dp, MaterialTheme.colors.secondary, CircleShape))
+                .border(2.dp, MaterialTheme.colors.secondary, CircleShape)
+        )
 
         Spacer(modifier = Modifier.width(8.dp)) // Add a horizontal space between the image and the column
         var isExpanded by remember { mutableStateOf(false) } // We keep track if the message is expanded or not in this variable
@@ -124,23 +140,28 @@ fun MessageCard(msg:Message) {
         Column(modifier = Modifier
             .align(Alignment.CenterVertically)
             .clickable { isExpanded = !isExpanded }) {
-            Text(text = msg.author,
+            Text(
+                text = msg.author,
                 color = MaterialTheme.colors.primaryVariant,
                 style = MaterialTheme.typography.subtitle1,
-                modifier = Modifier.fillMaxWidth())
+                modifier = Modifier.fillMaxWidth()
+            )
             Spacer(modifier = Modifier.height(4.dp)) // Add a vertical space between the author and message texts
-            Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp,
+            Surface(
+                shape = MaterialTheme.shapes.medium, elevation = 1.dp,
                 color = surfaceColor,
                 modifier = Modifier
                     .animateContentSize()
                     .padding(1.dp)
             ) {
-                Text(text = msg.body,
+                Text(
+                    text = msg.body,
                     style = MaterialTheme.typography.body1,
                     modifier = Modifier.padding(4.dp),
                     // If the message is expanded, we display all its content
                     // otherwise we only display the first line
-                    maxLines = if (isExpanded) Int.MAX_VALUE else 1)
+                    maxLines = if (isExpanded) Int.MAX_VALUE else 1
+                )
             }
         }
     }
@@ -152,7 +173,7 @@ private fun mToast(context: Context) {
 }
 
 @Composable
-fun Conversation(message:List<Message>) {
+fun Conversation(message: List<Message>) {
     LazyColumn {
         items(message) { MessageCard(msg = it) }
     }
@@ -162,7 +183,7 @@ fun Conversation(message:List<Message>) {
 fun StartActivityButton(
     text: String,
     intentActivity: Class<out Activity>,
-    mContext: Context = LocalContext.current // Fetching the local context for using the Toast
+    mContext: Context = LocalContext.current, // Fetching the local context for using the Toast
 ) {
     Button(
         onClick = {
@@ -171,7 +192,7 @@ fun StartActivityButton(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-            //.align(Alignment.CenterHorizontally),
+        //.align(Alignment.CenterHorizontally),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))
     ) {
         Text(text = text, color = Color.White)
@@ -180,4 +201,4 @@ fun StartActivityButton(
 
 // Adding extension for apply the HexCoded color
 // .background("HEXCODE".color)
-val String.color get()=Color(parseColor(this))
+val String.color get() = Color(parseColor(this))

@@ -1,4 +1,7 @@
-val     compose_version = "1.1.0" // Replace with the appropriate version number
+val compose_version = "1.1.0" // Replace with the appropriate version number
+val nav_compose_version = "2.4.0-alpha10"
+//def nav_compose_version = "2.5.0"//-alpha02" // Use the appropriate version that matches your Jetpack Compose version
+
 
 plugins {
     id("com.android.application")
@@ -56,7 +59,6 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:$compose_version")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
     implementation("androidx.activity:activity-compose:1.3.1")
-    implementation("androidx.navigation:navigation-runtime-ktx:2.5.3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
