@@ -14,9 +14,14 @@
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
         <activity
-            android:name=".BottomNavigation"
+            android:name=".TextToSpeeches"
             android:exported="false"
-            android:label="@string/title_activity_bottom_navigation"
+            android:label="@string/title_activity_text_to_speech"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
+            android:name=".ImageActivity"
+            android:exported="false"
+            android:label="@string/title_activity_image"
             android:theme="@style/Theme.Firstjetcompose" />
         <activity
             android:name=".GraphicsLayer"

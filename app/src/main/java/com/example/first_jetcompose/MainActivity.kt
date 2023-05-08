@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalComposeUiApi::class)
+@file:Suppress("UNUSED_EXPRESSION", "OPT_IN_IS_NOT_ENABLED")
 
 package com.example.first_jetcompose
 
@@ -62,7 +63,7 @@ fun TitleContent() {
                 backgroundColor = Color(0xff0f9d58)
             )
         },
-        content = {
+        content = {it
             Column {
                 StartActivityButton(
                     text = "Expand Activity",
@@ -87,6 +88,16 @@ fun TitleContent() {
                 StartActivityButton(
                     text = "Graphics Layer Activity",
                     intentActivity = GraphicsLayer::class.java
+                )
+
+                StartActivityButton(
+                    text = "Image Activity",
+                    intentActivity = ImageActivity::class.java
+                )
+
+                StartActivityButton(
+                    text = "Text To Speech Activity",
+                    intentActivity = TextToSpeeches::class.java
                 )
 
                 HomeContent()

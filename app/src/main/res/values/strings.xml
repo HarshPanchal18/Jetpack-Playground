@@ -8,4 +8,6 @@
     <string name="title_activity_lazy_grid">LazyGrid</string>
     <string name="title_activity_graphics_layer">GraphicsLayer</string>
     <string name="title_activity_bottom_navigation">BottomNavigation</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="title_activity_text_to_speech">TextToSpeech</string>
 </resources>
