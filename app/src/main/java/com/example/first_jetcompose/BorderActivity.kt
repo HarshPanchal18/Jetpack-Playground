@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_EXPRESSION")
+
 package com.example.first_jetcompose
 
 import android.os.Bundle
@@ -37,7 +39,7 @@ class BorderActivity : ComponentActivity() {
 
 @Composable
 fun BorderScreen() {
-    Scaffold {
+    Scaffold {it
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(32.dp),

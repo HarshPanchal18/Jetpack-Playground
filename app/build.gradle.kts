@@ -8,6 +8,9 @@ plugins {
 }
 
 android {
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
     //compileSdkVersion = 32
     compileSdk = 33 // Use String literal for compileSdkVersion
 
