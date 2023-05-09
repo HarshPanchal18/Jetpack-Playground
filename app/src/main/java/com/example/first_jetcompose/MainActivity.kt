@@ -64,7 +64,9 @@ fun TitleContent() {
             )
         },
         content = {it
-            Column {
+            Column(
+                //modifier = Modifier.verticalScroll(rememberScrollState())
+            ) {
                 StartActivityButton(
                     text = "Expand Activity",
                     intentActivity = SecondActivity::class.java
