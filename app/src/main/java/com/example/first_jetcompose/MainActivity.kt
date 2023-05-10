@@ -102,6 +102,11 @@ fun TitleContent() {
                     intentActivity = TextToSpeeches::class.java
                 )
 
+                StartActivityButton(
+                    text = "Auto Image Slider Activity",
+                    intentActivity = AutoImageSlider::class.java
+                )
+
                 HomeContent()
             }
         })
