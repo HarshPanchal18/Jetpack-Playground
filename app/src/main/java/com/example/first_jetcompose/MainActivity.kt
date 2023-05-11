@@ -63,51 +63,70 @@ fun TitleContent() {
                 backgroundColor = Color(0xff0f9d58)
             )
         },
-        content = {it
+        content = {
+            it
             Column(
                 //modifier = Modifier.verticalScroll(rememberScrollState())
             ) {
-                StartActivityButton(
-                    text = "Expand Activity",
-                    intentActivity = SecondActivity::class.java
-                )
+                Spacer(modifier = Modifier.height(10.dp))
 
-                StartActivityButton(
-                    text = "Corner Activity",
-                    intentActivity = BorderActivity::class.java
-                )
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .weight(1.3F)
+                ) {
 
-                StartActivityButton(
-                    text = "Drag Activity",
-                    intentActivity = DraggableActivity::class.java
-                )
+                    StartActivityButton(
+                        text = "Expand Activity",
+                        destination = SecondActivity::class.java
+                    )
 
-                StartActivityButton(
-                    text = "Row Grid Activity",
-                    intentActivity = LazyGrid::class.java
-                )
+                    StartActivityButton(
+                        text = "Corner Activity",
+                        destination = BorderActivity::class.java
+                    )
 
-                StartActivityButton(
-                    text = "Graphics Layer Activity",
-                    intentActivity = GraphicsLayer::class.java
-                )
+                    StartActivityButton(
+                        text = "Drag Activity",
+                        destination = DraggableActivity::class.java
+                    )
 
-                StartActivityButton(
-                    text = "Image Activity",
-                    intentActivity = ImageActivity::class.java
-                )
+                    StartActivityButton(
+                        text = "Row Grid Activity",
+                        destination = LazyGrid::class.java
+                    )
 
-                StartActivityButton(
-                    text = "Text To Speech Activity",
-                    intentActivity = TextToSpeeches::class.java
-                )
+                    StartActivityButton(
+                        text = "Graphics Layer Activity",
+                        destination = GraphicsLayer::class.java
+                    )
 
-                StartActivityButton(
-                    text = "Auto Image Slider Activity",
-                    intentActivity = AutoImageSlider::class.java
-                )
+                    StartActivityButton(
+                        text = "Image Activity",
+                        destination = ImageActivity::class.java
+                    )
 
-                HomeContent()
+                    StartActivityButton(
+                        text = "Text To Speech Activity",
+                        destination = TextToSpeeches::class.java
+                    )
+
+                    StartActivityButton(
+                        text = "Auto Image Slider Activity",
+                        destination = AutoImageSlider::class.java
+                    )
+
+                    StartActivityButton(
+                        text = "Navigation Activity",
+                        destination = NavigationActivity::class.java
+                    )
+                }
+
+                Column(
+                    modifier = Modifier.weight(1F)
+                ) {
+                    HomeContent()
+                }
             }
         })
 }
@@ -200,12 +219,12 @@ fun Conversation(message: List<Message>) {
 @Composable
 fun StartActivityButton(
     text: String,
-    intentActivity: Class<out Activity>,
+    destination: Class<out Activity>,
     mContext: Context = LocalContext.current, // Fetching the local context for using the Toast
 ) {
     Button(
         onClick = {
-            mContext.startActivity(Intent(mContext, intentActivity))
+            mContext.startActivity(Intent(mContext, destination))
         },
         modifier = Modifier
             .fillMaxWidth()

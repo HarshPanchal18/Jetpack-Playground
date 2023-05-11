@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.first_jetcompose">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
+        <activity
+            android:name=".NavigationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
+            android:name=".LocalNotification"
+            android:exported="false"
+            android:label="@string/title_activity_local_notification"
+            android:theme="@style/Theme.Firstjetcompose" />
         <activity
             android:name=".AutoImageSlider"
             android:exported="false"

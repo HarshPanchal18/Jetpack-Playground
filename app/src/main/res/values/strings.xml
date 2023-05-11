@@ -11,4 +11,6 @@
     <string name="title_activity_image">ImageActivity</string>
     <string name="title_activity_text_to_speech">TextToSpeech</string>
     <string name="title_activity_auto_image_slider">AutoImageSlider</string>
+    <string name="title_activity_local_notification">LocalNotification</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
 </resources>

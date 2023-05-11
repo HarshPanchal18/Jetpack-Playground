@@ -1,6 +1,7 @@
 val compose_version = "1.1.0" // Replace with the appropriate version number
 val nav_compose_version = "2.4.0-alpha10"
 //def nav_compose_version = "2.5.0"//-alpha02" // Use the appropriate version that matches your Jetpack Compose version
+val nav_version = "2.5.3"
 
 plugins {
     id("com.android.application")
@@ -73,7 +74,6 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
     implementation("androidx.compose.material3:material3:1.0.0-alpha02")
@@ -84,4 +84,6 @@ dependencies {
     //implementation("com.google.accompanist:accompanist-coil:0.22.0-rc")
     //implementation("com.google.accompanist:accompanist-pager:0.23.1")
     implementation("io.coil-kt:coil-compose:2.2.2")
+
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 }
