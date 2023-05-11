@@ -21,11 +21,6 @@
             android:label="@string/title_activity_navigation"
             android:theme="@style/Theme.Firstjetcompose" />
         <activity
-            android:name=".LocalNotification"
-            android:exported="false"
-            android:label="@string/title_activity_local_notification"
-            android:theme="@style/Theme.Firstjetcompose" />
-        <activity
             android:name=".AutoImageSlider"
             android:exported="false"
             android:label="@string/title_activity_auto_image_slider"
