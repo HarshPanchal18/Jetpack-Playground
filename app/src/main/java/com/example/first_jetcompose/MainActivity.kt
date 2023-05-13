@@ -120,6 +120,11 @@ fun TitleContent() {
                         text = "Navigation Activity",
                         destination = NavigationActivity::class.java
                     )
+
+                    StartActivityButton(
+                        text = "Bottom Navigation Activity",
+                        destination = BottomNavigation::class.java
+                    )
                 }
 
                 Column(
