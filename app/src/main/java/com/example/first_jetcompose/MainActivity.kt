@@ -65,9 +65,7 @@ fun TitleContent() {
         },
         content = {
             it
-            Column(
-                //modifier = Modifier.verticalScroll(rememberScrollState())
-            ) {
+            Column {
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Column(
@@ -124,6 +122,11 @@ fun TitleContent() {
                     StartActivityButton(
                         text = "Bottom Navigation Activity",
                         destination = BottomNavigation::class.java
+                    )
+
+                    StartActivityButton(
+                        text = "Constraint Layout Activity",
+                        destination = ConstraintLayoutDemo::class.java
                     )
                 }
 

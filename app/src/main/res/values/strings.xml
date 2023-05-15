@@ -15,4 +15,5 @@
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_activity_flip_card">FlipCard</string>
     <string name="title_activity_sitcky_header">SitckyHeaderActivity</string>
+    <string name="title_activity_constraint_layout">ConstraintLayout</string>
 </resources>
