@@ -1,5 +1,5 @@
-@file:OptIn(ExperimentalComposeUiApi::class)
-@file:Suppress("UNUSED_EXPRESSION", "OPT_IN_IS_NOT_ENABLED")
+@file:OptIn(ExperimentalComposeUiApi::class, ExperimentalComposeUiApi::class)
+@file:Suppress("UNUSED_EXPRESSION")
 
 package com.example.first_jetcompose
 
