@@ -1,4 +1,4 @@
-val compose_version = "1.1.0" // Replace with the appropriate version number
+val compose_version = "1.4.0" // Replace with the appropriate version number
 val nav_compose_version = "2.4.0-alpha10"
 //def nav_compose_version = "2.5.0"//-alpha02" // Use the appropriate version that matches your Jetpack Compose version
 val nav_version = "2.5.3"
@@ -70,10 +70,14 @@ dependencies {
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")

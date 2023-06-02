@@ -40,8 +40,10 @@ class GraphicsLayer : ComponentActivity() {
         setContent {
             FirstjetcomposeTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
                     GraphicsLayerScreen()
                 }
             }
@@ -53,11 +55,13 @@ class GraphicsLayer : ComponentActivity() {
 @Composable
 private fun GraphicsLayerScreen() {
     Scaffold {
-        Column(modifier = Modifier
-            .background("#aa54a2da".color)
-            .fillMaxSize()
-            .padding(vertical = 22.dp)
-            .verticalScroll(rememberScrollState()),
+        it
+        Column(
+            modifier = Modifier
+                .background("#aa54a2da".color)
+                .fillMaxSize()
+                .padding(vertical = 22.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -75,7 +79,11 @@ private fun GraphicsLayerScreen() {
             CustomText()
             CustomText3()
             CustomTextSelection()
-            SuperScriptText(normalText = "Hello ", superText = "World", superTextWeight = FontWeight.Light)
+            SuperScriptText(
+                normalText = "Hello ",
+                superText = "World",
+                superTextWeight = FontWeight.Light
+            )
             SubScriptText("Hello ", "World")
         }
     }
@@ -164,11 +172,16 @@ fun GraphicsLayerScaleX() {
 fun CustomText() {
     Text(
         buildAnnotatedString {
-            withStyle(ParagraphStyle(textAlign = TextAlign.Center)
+            withStyle(
+                ParagraphStyle(textAlign = TextAlign.Center)
             ) {
-                withStyle(SpanStyle(color = MaterialTheme.colors.primary,
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold)) {
+                withStyle(
+                    SpanStyle(
+                        //color = MaterialTheme.colors.primary,
+                        fontSize = 25.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                ) {
                     append("A")
                 }
                 append("B")
@@ -186,90 +199,110 @@ fun CustomText3() {
 
 @Composable
 fun GraphicsLayerScaleY() {
-    Text(stringResource(id = R.string.app_name),
+    Text(
+        stringResource(id = R.string.app_name),
         Modifier.graphicsLayer(
             scaleY = 1.5f,
             clip = true
-        ))
+        )
+    )
 }
 
 @Composable
 fun GraphicsLayerAlpha() {
-    Text(stringResource(id = R.string.app_name),
+    Text(
+        stringResource(id = R.string.app_name),
         Modifier.graphicsLayer(
             alpha = 0.5f,
             clip = true
-        ))
+        )
+    )
 }
 
 @Composable
 fun GraphicsLayerTranslationX() {
-    Text(stringResource(id = R.string.app_name),
+    Text(
+        stringResource(id = R.string.app_name),
         Modifier.graphicsLayer(
             translationX = 0.5f,
             clip = true
-        ))
+        )
+    )
 }
 
 @Composable
 fun GraphicsLayerTranslationY() {
-    Text(stringResource(id = R.string.app_name),
+    Text(
+        stringResource(id = R.string.app_name),
         Modifier.graphicsLayer(
             translationY = 0.5f,
             clip = true
-        ))
+        )
+    )
 }
 
 @Composable
 fun GraphicsLayerShadowElevation() {
-    Text(stringResource(id = R.string.app_name),
+    Text(
+        stringResource(id = R.string.app_name),
         Modifier.graphicsLayer(
             shadowElevation = 3.5f,
             clip = true
-        ))
+        )
+    )
 }
 
 @Composable
 fun GraphicsLayerRotationX() {
-    Text(stringResource(id = R.string.app_name),
+    Text(
+        stringResource(id = R.string.app_name),
         Modifier.graphicsLayer(
             rotationX = 180f,
             clip = true
-        ))
+        )
+    )
 }
 
 @Composable
 fun GraphicsLayerRotationY() {
-    Text(stringResource(id = R.string.app_name),
+    Text(
+        stringResource(id = R.string.app_name),
         Modifier.graphicsLayer(
             rotationY = 180f,
             clip = true
-        ))
+        )
+    )
 }
 
 @Composable
 fun GraphicsLayerRotationZ() {
-    Text(stringResource(id = R.string.app_name),
+    Text(
+        stringResource(id = R.string.app_name),
         Modifier.graphicsLayer(
             rotationZ = 330f,
             clip = true
-        ))
+        )
+    )
 }
 
 @Composable
 fun GraphicsLayerCameraDistance() {
-    Text(stringResource(id = R.string.app_name),
+    Text(
+        stringResource(id = R.string.app_name),
         Modifier.graphicsLayer(
             cameraDistance = 16f,
             clip = true
-        ))
+        )
+    )
 }
 
 @Composable
 fun GraphicsLayerTransformOrigin() {
-    Text(stringResource(id = R.string.app_name),
+    Text(
+        stringResource(id = R.string.app_name),
         Modifier.graphicsLayer(
             transformOrigin = TransformOrigin(2f, 2f),
             clip = true
-        ))
+        )
+    )
 }

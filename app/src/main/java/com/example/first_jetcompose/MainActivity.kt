@@ -128,6 +128,14 @@ fun TitleContent() {
                         text = "Constraint Layout Activity",
                         destination = ConstraintLayoutDemo::class.java
                     )
+                    StartActivityButton(
+                        text = "NavBar Activity",
+                        destination = AppNavbar::class.java
+                    )
+                    StartActivityButton(
+                        text = "Shimmer Effect Activity",
+                        destination = ShimmerActivity::class.java
+                    )
                 }
 
                 Column(
