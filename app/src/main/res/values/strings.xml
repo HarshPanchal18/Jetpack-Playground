@@ -19,4 +19,5 @@
     <string name="title_activity_tool_tip">ToolTipActivity</string>
     <string name="title_activity_app_navbar">AppNavbar</string>
     <string name="title_activity_shimmer">ShimmerActivity</string>
+    <string name="title_activity_screen_orientation">ScreenOrientation</string>
 </resources>

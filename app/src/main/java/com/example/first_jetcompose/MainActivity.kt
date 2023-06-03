@@ -136,6 +136,10 @@ fun TitleContent() {
                         text = "Shimmer Effect Activity",
                         destination = ShimmerActivity::class.java
                     )
+                    StartActivityButton(
+                        text = "Screen Orientation Activity",
+                        destination = ScreenOrientation::class.java
+                    )
                 }
 
                 Column(
