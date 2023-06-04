@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.first_jetcompose.sealed.BottomBarScreen
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
 import com.example.first_jetcompose.ui.theme.SampleData
 
@@ -139,6 +140,10 @@ fun TitleContent() {
                     StartActivityButton(
                         text = "Screen Orientation Activity",
                         destination = ScreenOrientation::class.java
+                    )
+                    StartActivityButton(
+                        text = "Custom Bottom Navigation Activity",
+                        destination = CustomBottomNavigation::class.java
                     )
                 }
 

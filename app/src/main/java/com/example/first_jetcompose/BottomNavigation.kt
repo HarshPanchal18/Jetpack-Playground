@@ -31,6 +31,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.first_jetcompose.sealed.Screen
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
 
 class BottomNavigation : ComponentActivity() {
@@ -54,7 +55,7 @@ class BottomNavigation : ComponentActivity() {
                                 })
                         },
                         bottomBar = {
-                            val items = listOf(Screen.Account,Screen.Date,Screen.Edit,Screen.ThumpUp)
+                            val items = listOf(Screen.Account, Screen.Date, Screen.Edit, Screen.ThumpUp)
                             BottomNavigation {
                                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                                 val KEY_ROUTE = "android-support-nav:controller:route"
