@@ -21,4 +21,5 @@
     <string name="title_activity_shimmer">ShimmerActivity</string>
     <string name="title_activity_screen_orientation">ScreenOrientation</string>
     <string name="title_activity_custom_bottom_navigation">CustomBottomNavigation</string>
+    <string name="title_activity_switches">Switches</string>
 </resources>

@@ -16,6 +16,11 @@
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
         <activity
+            android:name=".SwitchesActivity"
+            android:exported="false"
+            android:label="@string/title_activity_switches"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
             android:name=".CustomBottomNavigation"
             android:exported="false"
             android:label="@string/title_activity_custom_bottom_navigation"

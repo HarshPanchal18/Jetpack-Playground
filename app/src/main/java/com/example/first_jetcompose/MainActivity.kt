@@ -142,8 +142,12 @@ fun TitleContent() {
                         destination = ScreenOrientation::class.java
                     )
                     StartActivityButton(
-                        text = "Custom Bottom Navigation Activity",
+                        text = "Custom Modern Bottom Navigation Activity",
                         destination = CustomBottomNavigation::class.java
+                    )
+                    StartActivityButton(
+                        text = "Custom Switches Activity",
+                        destination = SwitchesActivity::class.java
                     )
                 }
 
