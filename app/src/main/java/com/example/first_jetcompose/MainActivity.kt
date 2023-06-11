@@ -149,6 +149,10 @@ fun TitleContent() {
                         text = "Custom Switches Activity",
                         destination = SwitchesActivity::class.java
                     )
+                    StartActivityButton(
+                        text = "Bottom Sheet Activity",
+                        destination = BottomSheet::class.java
+                    )
                 }
 
                 Column(
