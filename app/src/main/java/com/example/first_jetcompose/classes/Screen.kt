@@ -1,4 +1,4 @@
-package com.example.first_jetcompose.sealed
+package com.example.first_jetcompose.classes
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox

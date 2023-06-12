@@ -1,4 +1,4 @@
-package com.example.first_jetcompose.sealed
+package com.example.first_jetcompose.classes
 
 import com.example.first_jetcompose.R
 
