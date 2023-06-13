@@ -1,5 +1,4 @@
 @file:OptIn(ExperimentalComposeUiApi::class, ExperimentalComposeUiApi::class)
-@file:Suppress("UNUSED_EXPRESSION")
 
 package com.example.first_jetcompose
 
@@ -40,7 +39,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FirstjetcomposeTheme {
                 TitleContent()
-            } // FirstjetcomposeTheme
+            } // FirstJetComposeTheme
         } // setContent
     }
 }
@@ -50,117 +49,53 @@ data class Message(val author: String, val body: String)
 @Preview
 @Composable
 fun TitleContent() {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Home",
-                        color = Color.Black,
-                        fontFamily = FontFamily.Cursive,
-                    )
-                },
-                backgroundColor = Color(0xff0f9d58)
-            )
-        },
+    Scaffold(topBar = {
+        TopAppBar(
+            title = {
+                Text(
+                    text = "Home",
+                    color = Color.Black,
+                    fontFamily = FontFamily.Cursive,
+                )
+            },
+            backgroundColor = Color(0xff0f9d58)
+        )
+    },
         content = {
-            it
-            Column {
+            val activityButtons = listOf(
+                "Expand Activity" to SecondActivity::class.java,
+                "Corner Activity" to BorderActivity::class.java,
+                "Drag Activity" to DraggableActivity::class.java,
+                "Row Grid Activity" to LazyGrid::class.java,
+                "Graphics Layer Activity" to GraphicsLayer::class.java,
+                "Image Activity" to ImageActivity::class.java,
+                "Text To Speech Activity" to TextToSpeeches::class.java,
+                "Auto Image Slider Activity" to AutoImageSlider::class.java,
+                "Navigation Activity" to NavigationActivity::class.java,
+                "Bottom Navigation Activity" to BottomNavigation::class.java,
+                "Constraint Layout Activity" to ConstraintLayoutDemo::class.java,
+                "NavBar Activity" to AppNavbar::class.java,
+                "Shimmer Effect Activity" to ShimmerActivity::class.java,
+                "Screen Orientation Activity" to ScreenOrientation::class.java,
+                "Modern Bottom Navigation Activity" to CustomBottomNavigation::class.java,
+                "Custom Switches Activity" to SwitchesActivity::class.java,
+                "Bottom Sheet Activity" to BottomSheet::class.java,
+                "Tab Layout Activity" to TabLayoutActivity::class.java,
+                "EditText Activity" to EditTextActivity::class.java,
+            )
+
+            Column(modifier = Modifier.padding(it)) {
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Column(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                        .weight(1.3F)
-                ) {
-
-                    StartActivityButton(
-                        text = "Expand Activity",
-                        destination = SecondActivity::class.java
-                    )
-
-                    StartActivityButton(
-                        text = "Corner Activity",
-                        destination = BorderActivity::class.java
-                    )
-
-                    StartActivityButton(
-                        text = "Drag Activity",
-                        destination = DraggableActivity::class.java
-                    )
-
-                    StartActivityButton(
-                        text = "Row Grid Activity",
-                        destination = LazyGrid::class.java
-                    )
-
-                    StartActivityButton(
-                        text = "Graphics Layer Activity",
-                        destination = GraphicsLayer::class.java
-                    )
-
-                    StartActivityButton(
-                        text = "Image Activity",
-                        destination = ImageActivity::class.java
-                    )
-
-                    StartActivityButton(
-                        text = "Text To Speech Activity",
-                        destination = TextToSpeeches::class.java
-                    )
-
-                    StartActivityButton(
-                        text = "Auto Image Slider Activity",
-                        destination = AutoImageSlider::class.java
-                    )
-
-                    StartActivityButton(
-                        text = "Navigation Activity",
-                        destination = NavigationActivity::class.java
-                    )
-
-                    StartActivityButton(
-                        text = "Bottom Navigation Activity",
-                        destination = BottomNavigation::class.java
-                    )
-
-                    StartActivityButton(
-                        text = "Constraint Layout Activity",
-                        destination = ConstraintLayoutDemo::class.java
-                    )
-                    StartActivityButton(
-                        text = "NavBar Activity",
-                        destination = AppNavbar::class.java
-                    )
-                    StartActivityButton(
-                        text = "Shimmer Effect Activity",
-                        destination = ShimmerActivity::class.java
-                    )
-                    StartActivityButton(
-                        text = "Screen Orientation Activity",
-                        destination = ScreenOrientation::class.java
-                    )
-                    StartActivityButton(
-                        text = "Custom Modern Bottom Navigation Activity",
-                        destination = CustomBottomNavigation::class.java
-                    )
-                    StartActivityButton(
-                        text = "Custom Switches Activity",
-                        destination = SwitchesActivity::class.java
-                    )
-                    StartActivityButton(
-                        text = "Bottom Sheet Activity",
-                        destination = BottomSheet::class.java
-                    )
-                    StartActivityButton(
-                        text = "Tab layout Activity",
-                        destination = TabLayoutActivity::class.java
-                    )
+                Column(modifier = Modifier.weight(1.3F)) {
+                    LazyColumn {
+                        items(activityButtons) { (heading, destination) ->
+                            StartActivityButton(heading, destination)
+                        }
+                    }
                 }
 
-                Column(
-                    modifier = Modifier.weight(1F)
-                ) {
+                Column(modifier = Modifier.weight(1F)) {
                     HomeContent()
                 }
             }
@@ -254,24 +189,27 @@ fun Conversation(message: List<Message>) {
 
 @Composable
 fun StartActivityButton(
-    text: String,
-    destination: Class<out Activity>,
-    mContext: Context = LocalContext.current, // Fetching the local context for using the Toast
+    heading: String,
+    destination: Class<out Activity>
 ) {
+    val context = LocalContext.current
+    val onClick = remember(context) { // To cache the onClick lambda expr
+        { // This way, the lambda expression won't be recreated on every recomposition
+            context.startActivity(Intent(context, destination))
+        }
+    }
+
     Button(
-        onClick = {
-            mContext.startActivity(Intent(mContext, destination))
-        },
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        //.align(Alignment.CenterHorizontally),
+            .padding(horizontal = 10.dp),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))
     ) {
-        Text(text = text, color = Color.White)
+        Text(text = heading, color = Color.White)
     }
 }
 
 // Adding extension for apply the HexCoded color
-// .background("HEXCODE".color)
+// .background("HEX-CODE".color)
 val String.color get() = Color(parseColor(this))
