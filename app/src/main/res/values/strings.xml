@@ -25,4 +25,5 @@
     <string name="title_activity_bottom_sheet">BottomSheet</string>
     <string name="title_activity_tab_layout">TabLayout</string>
     <string name="title_activity_edit_text">EditTextActivity</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawer</string>
 </resources>

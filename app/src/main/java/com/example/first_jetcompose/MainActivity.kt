@@ -82,6 +82,7 @@ fun TitleContent() {
                 "Bottom Sheet Activity" to BottomSheet::class.java,
                 "Tab Layout Activity" to TabLayoutActivity::class.java,
                 "EditText Activity" to EditTextActivity::class.java,
+                "Navigation Drawer Activity" to NavigationDrawer::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
