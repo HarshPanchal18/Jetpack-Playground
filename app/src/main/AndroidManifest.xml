@@ -16,6 +16,11 @@
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
         <activity
+            android:name=".BottomAndDrawerActivity"
+            android:exported="false"
+            android:label="@string/title_activity_bottom_and_drawer"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
             android:name=".NavigationDrawer"
             android:exported="false"
             android:label="@string/title_activity_navigation_drawer"
