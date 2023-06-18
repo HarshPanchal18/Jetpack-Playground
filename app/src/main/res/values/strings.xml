@@ -27,4 +27,6 @@
     <string name="title_activity_edit_text">EditTextActivity</string>
     <string name="title_activity_navigation_drawer">NavigationDrawer</string>
     <string name="title_activity_bottom_and_drawer">BottomAndDrawerActivity</string>
+    <string name="title_activity_gradient">GradientActivity</string>
+    <string name="title_activity_swipe_to_refresh">SwipeToRefresh</string>
 </resources>
