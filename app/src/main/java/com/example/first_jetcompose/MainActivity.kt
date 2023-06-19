@@ -86,6 +86,7 @@ fun TitleContent() {
                 "Navigation Drawer with Bottom Navigation Activity" to BottomAndDrawerActivity::class.java,
                 "Gradient Activity" to GradientActivity::class.java,
                 "Swipe To Refresh Activity" to SwipeToRefresh::class.java,
+                "OTP TextField Activity" to OtpTextField::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
