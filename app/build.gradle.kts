@@ -72,21 +72,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
@@ -105,4 +94,5 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager-indicators:$accompanist_version") // Pager Indicators
 
     implementation("com.google.accompanist:accompanist-swiperefresh:0.24.13-rc") // Swipe to refresh
+    implementation("com.github.madrapps:plot:0.1.1") // Line Charts
 }

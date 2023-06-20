@@ -87,6 +87,8 @@ fun TitleContent() {
                 "Gradient Activity" to GradientActivity::class.java,
                 "Swipe To Refresh Activity" to SwipeToRefresh::class.java,
                 "OTP TextField Activity" to OtpTextField::class.java,
+                "Circular Bottom Sheet Activity" to CircularRevealWap::class.java,
+                "Chart Activity" to ChartScreen::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {

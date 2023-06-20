@@ -30,4 +30,6 @@
     <string name="title_activity_gradient">GradientActivity</string>
     <string name="title_activity_swipe_to_refresh">SwipeToRefresh</string>
     <string name="title_activity_otp_text_field">OtpTextField</string>
+    <string name="title_activity_circular_reveal_wapp">CircularRevealWapp</string>
+    <string name="title_activity_chart_screen">ChartScreen</string>
 </resources>

@@ -16,6 +16,16 @@
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
         <activity
+            android:name=".ChartScreen"
+            android:exported="false"
+            android:label="@string/title_activity_chart_screen"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
+            android:name=".CircularRevealWap"
+            android:exported="false"
+            android:label="@string/title_activity_circular_reveal_wapp"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
             android:name=".OtpTextField"
             android:exported="false"
             android:label="@string/title_activity_otp_text_field"
