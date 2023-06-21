@@ -16,6 +16,16 @@
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
         <activity
+            android:name=".DropDownActivity"
+            android:exported="false"
+            android:label="@string/title_activity_drop_down"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
+            android:name=".AlertDialogActivity"
+            android:exported="false"
+            android:label="@string/title_activity_alert_dialog"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
             android:name=".ChartScreen"
             android:exported="false"
             android:label="@string/title_activity_chart_screen"

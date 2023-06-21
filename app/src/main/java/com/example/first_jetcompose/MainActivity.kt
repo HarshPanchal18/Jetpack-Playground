@@ -89,6 +89,8 @@ fun TitleContent() {
                 "OTP TextField Activity" to OtpTextField::class.java,
                 "Circular Bottom Sheet Activity" to CircularRevealWap::class.java,
                 "Chart Activity" to ChartScreen::class.java,
+                "Alert Dialog Activity" to AlertDialogActivity::class.java,
+                "Drop Down Activity" to DropDownActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
@@ -110,7 +112,7 @@ fun TitleContent() {
 }
 
 @Composable
-fun HomeContent() {
+fun HomeContent() { // Bottom list
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background

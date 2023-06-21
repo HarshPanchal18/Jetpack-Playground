@@ -32,4 +32,6 @@
     <string name="title_activity_otp_text_field">OtpTextField</string>
     <string name="title_activity_circular_reveal_wapp">CircularRevealWapp</string>
     <string name="title_activity_chart_screen">ChartScreen</string>
+    <string name="title_activity_alert_dialog">AlertDialogActivity</string>
+    <string name="title_activity_drop_down">DropDownActivity</string>
 </resources>
