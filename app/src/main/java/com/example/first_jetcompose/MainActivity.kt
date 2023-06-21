@@ -91,6 +91,7 @@ fun TitleContent() {
                 "Chart Activity" to ChartScreen::class.java,
                 "Alert Dialog Activity" to AlertDialogActivity::class.java,
                 "Drop Down Activity" to DropDownActivity::class.java,
+                "Loading Animation Activity" to LoadingAnimationScreen::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {

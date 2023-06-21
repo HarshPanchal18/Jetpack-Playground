@@ -16,6 +16,11 @@
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
         <activity
+            android:name=".LoadingAnimationScreen"
+            android:exported="false"
+            android:label="@string/title_activity_loading_animation_screen"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
             android:name=".DropDownActivity"
             android:exported="false"
             android:label="@string/title_activity_drop_down"
