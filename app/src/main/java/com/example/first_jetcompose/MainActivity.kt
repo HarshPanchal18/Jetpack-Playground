@@ -93,6 +93,7 @@ fun HomeLayout() {
                 "Drop Down Activity" to DropDownActivity::class.java,
                 "Loading Animation Activity" to LoadingAnimationScreen::class.java,
                 "Fullscreen Dialog Activity" to FullScreenDialogActivity::class.java,
+                "Custom Radio Button Activity" to CustomRadioButton::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
