@@ -35,4 +35,5 @@
     <string name="title_activity_alert_dialog">AlertDialogActivity</string>
     <string name="title_activity_drop_down">DropDownActivity</string>
     <string name="title_activity_loading_animation_screen">LoadingAnimationScreen</string>
+    <string name="title_activity_full_screen_dialog">FullScreenDialogActivity</string>
 </resources>

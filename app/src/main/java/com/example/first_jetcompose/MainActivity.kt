@@ -38,9 +38,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FirstjetcomposeTheme {
-                TitleContent()
-            } // FirstJetComposeTheme
-        } // setContent
+                HomeLayout()
+            }
+        }
     }
 }
 
@@ -48,7 +48,7 @@ data class Message(val author: String, val body: String)
 
 @Preview
 @Composable
-fun TitleContent() {
+fun HomeLayout() {
     Scaffold(topBar = {
         TopAppBar(
             title = {
@@ -92,6 +92,7 @@ fun TitleContent() {
                 "Alert Dialog Activity" to AlertDialogActivity::class.java,
                 "Drop Down Activity" to DropDownActivity::class.java,
                 "Loading Animation Activity" to LoadingAnimationScreen::class.java,
+                "Fullscreen Dialog Activity" to FullScreenDialogActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
@@ -105,15 +106,13 @@ fun TitleContent() {
                     }
                 }
 
-                Column(modifier = Modifier.weight(1F)) {
-                    HomeContent()
-                }
+                Column(modifier = Modifier.weight(1F)) { BottomList() }
             }
         })
 }
 
 @Composable
-fun HomeContent() { // Bottom list
+fun BottomList() { // Bottom list
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
