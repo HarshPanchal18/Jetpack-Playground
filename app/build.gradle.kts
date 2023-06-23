@@ -105,4 +105,7 @@ dependencies {
 
     implementation("com.google.accompanist:accompanist-swiperefresh:0.24.13-rc") // Swipe to refresh
     implementation("com.github.madrapps:plot:0.1.1") // Line Charts
+
+    // system bars customization
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
 }

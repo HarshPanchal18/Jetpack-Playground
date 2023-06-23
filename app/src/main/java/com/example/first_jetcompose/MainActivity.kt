@@ -74,7 +74,7 @@ fun HomeLayout() {
                 "Navigation Activity" to NavigationActivity::class.java,
                 "Bottom Navigation Activity" to BottomNavigation::class.java,
                 "Constraint Layout Activity" to ConstraintLayoutDemo::class.java,
-                "NavBar Activity" to AppNavbar::class.java,
+                "Transparent Bars Activity" to TransparentStatusBar::class.java,
                 "Shimmer Effect Activity" to ShimmerActivity::class.java,
                 "Screen Orientation Activity" to ScreenOrientation::class.java,
                 "Modern Bottom Navigation Activity" to CustomBottomNavigation::class.java,
@@ -99,7 +99,11 @@ fun HomeLayout() {
             Column(modifier = Modifier.padding(it)) {
                 Spacer(modifier = Modifier.height(10.dp))
 
-                Column(modifier = Modifier.weight(1.3F)) {
+                Column(
+                    modifier = Modifier
+                        .weight(1.3F)
+                        .padding(horizontal = 10.dp)
+                ) {
                     LazyColumn {
                         items(activityButtons) { (heading, destination) ->
                             StartActivityButton(heading, destination)
@@ -176,8 +180,7 @@ fun MessageCard(msg: Message) {
                     text = msg.body,
                     style = MaterialTheme.typography.body1,
                     modifier = Modifier.padding(4.dp),
-                    // If the message is expanded, we display all its content
-                    // otherwise we only display the first line
+                    // If the message is expanded, we display all its content otherwise we only display the first line
                     maxLines = if (isExpanded) Int.MAX_VALUE else 1
                 )
             }
@@ -211,13 +214,9 @@ fun StartActivityButton(
 
     Button(
         onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp),
+        modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))
-    ) {
-        Text(text = heading, color = Color.White)
-    }
+    ) { Text(text = heading, color = Color.White) }
 }
 
 // Adding extension for apply the HexCoded color

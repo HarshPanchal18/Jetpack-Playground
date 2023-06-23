@@ -111,7 +111,7 @@
             android:label="@string/title_activity_shimmer"
             android:theme="@style/Theme.Firstjetcompose" />
         <activity
-            android:name=".AppNavbar"
+            android:name=".TransparentStatusBar"
             android:exported="false"
             android:label="@string/title_activity_app_navbar"
             android:theme="@style/Theme.Firstjetcompose" />

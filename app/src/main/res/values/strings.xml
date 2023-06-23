@@ -17,7 +17,7 @@
     <string name="title_activity_sitcky_header">SitckyHeaderActivity</string>
     <string name="title_activity_constraint_layout">ConstraintLayout</string>
     <string name="title_activity_tool_tip">ToolTipActivity</string>
-    <string name="title_activity_app_navbar">AppNavbar</string>
+    <string name="title_activity_app_navbar">TransparentStatusBar</string>
     <string name="title_activity_shimmer">ShimmerActivity</string>
     <string name="title_activity_screen_orientation">ScreenOrientation</string>
     <string name="title_activity_custom_bottom_navigation">CustomBottomNavigation</string>
