@@ -92,7 +92,7 @@ fun HomeLayout() {
                 "Alert Dialog Activity" to AlertDialogActivity::class.java,
                 "Drop Down Activity" to DropDownActivity::class.java,
                 "Loading Animation Activity" to LoadingAnimationScreen::class.java,
-                "Fullscreen Dialog Activity" to FullScreenDialogActivity::class.java,
+                "Dialog Activity" to FullScreenDialogActivity::class.java,
                 "Custom Radio Button Activity" to CustomRadioButton::class.java,
             )
 
