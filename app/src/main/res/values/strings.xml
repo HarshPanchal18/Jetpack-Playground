@@ -37,4 +37,5 @@
     <string name="title_activity_loading_animation_screen">LoadingAnimationScreen</string>
     <string name="title_activity_full_screen_dialog">FullScreenDialogActivity</string>
     <string name="title_activity_custom_radio_button">CustomRadioButton</string>
+    <string name="title_activity_custom_checkbox">CustomCheckbox</string>
 </resources>

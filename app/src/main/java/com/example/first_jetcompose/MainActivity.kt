@@ -94,6 +94,7 @@ fun HomeLayout() {
                 "Loading Animation Activity" to LoadingAnimationScreen::class.java,
                 "Dialog Activity" to FullScreenDialogActivity::class.java,
                 "Custom Radio Button Activity" to CustomRadioButton::class.java,
+                "Custom Checkbox Activity" to CustomCheckboxActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
