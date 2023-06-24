@@ -9,6 +9,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -27,10 +28,13 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -45,6 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -75,6 +80,7 @@ class FullScreenDialogActivity : ComponentActivity() {
                     DialogBoxLoadingLayout()
                     DialogBoxDeleteLayout()
                     DialogBoxDelete2Layout()
+                    TwoFADialogLayout()
                 }
             }
         }
@@ -443,5 +449,96 @@ fun DialogButton(buttonColor: Color, buttonText: String, onDismiss: () -> Unit) 
             color = Color.White,
             fontSize = 18.sp,
         )
+    }
+}
+
+// 2FA Dialog box
+@Composable
+fun TwoFADialogLayout() {
+    Column(
+        modifier = Modifier.background(color = MaterialTheme.colors.background),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        var openDialog by remember { mutableStateOf(false) }
+
+        Button(onClick = { openDialog = true }) {
+            Text("Open 2FA Dialog")
+        }
+
+        if (openDialog) {
+            DialogBox2FA {
+                openDialog = false
+            }
+        }
+    }
+}
+
+@Composable
+fun DialogBox2FA(onDismiss: () -> Unit) {
+    val contextForToast = LocalContext.current.applicationContext
+
+    Dialog(onDismissRequest = { onDismiss() }) {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            elevation = 4.dp
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                        .background(color = Color(0xFF35898f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
+                        painter = painterResource(R.drawable.image_security),
+                        contentDescription = "2-Step Verification",
+                        alignment = Alignment.Center
+                    )
+                }
+                Text(
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    text = "2-step Verification",
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(fontSize = 20.sp)
+                )
+
+                Text(
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                    text = "Setup 2-step Verification to add additional layer of security to your account.",
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(fontSize = 14.sp)
+                )
+
+                Button(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 36.dp, start = 36.dp, end = 36.dp, bottom = 8.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF35898f)),
+                    onClick = {
+                        onDismiss()
+                        Toast.makeText(contextForToast, "Setting up", Toast.LENGTH_SHORT).show()
+                    }) {
+                    Text(
+                        text = "Setup Now",
+                        color = Color.White,
+                        style = TextStyle(fontSize = 16.sp)
+                    )
+                }
+
+                TextButton(onClick = { onDismiss() }) {
+                    Text(
+                        text = "I'll od it later",
+                        modifier = Modifier.padding(bottom = 10.dp),
+                        color = Color(0xFF35898F),
+                        style = TextStyle(fontSize = 14.sp)
+                    )
+                }
+            }
+        }
     }
 }
