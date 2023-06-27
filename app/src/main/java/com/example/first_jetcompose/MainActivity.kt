@@ -81,7 +81,7 @@ fun HomeLayout() {
                 "Custom Switches Activity" to SwitchesActivity::class.java,
                 "Bottom Sheet Activity" to BottomSheet::class.java,
                 "Tab Layout Activity" to TabLayoutActivity::class.java,
-                "EditText Activity" to EditTextActivity::class.java,
+                "TextField Activity" to EditTextActivity::class.java,
                 "Navigation Drawer Activity" to NavigationDrawer::class.java,
                 "Navigation Drawer with Bottom Navigation Activity" to BottomAndDrawerActivity::class.java,
                 "Gradient Activity" to GradientActivity::class.java,
