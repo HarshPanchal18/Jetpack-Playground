@@ -39,4 +39,6 @@
     <string name="title_activity_custom_radio_button">CustomRadioButton</string>
     <string name="title_activity_custom_checkbox">CustomCheckbox</string>
     <string name="title_activity_arc_progress_bar">ArcProgressBar</string>
+    <string name="title_activity_picker">PickerActivity</string>
+    <string name="compose_shortcut_short_label1">Go to Main Activity</string>
 </resources>

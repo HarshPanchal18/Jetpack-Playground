@@ -85,17 +85,20 @@ dependencies {
     //implementation("com.android.support:appcompat-v7:28.0.0-rc01")
     implementation("com.google.accompanist:accompanist-pager:0.22.0-rc")
     //implementation("com.google.accompanist:accompanist-coil:0.22.0-rc")
-    //implementation("com.google.accompanist:accompanist-pager:0.23.1")
     implementation("io.coil-kt:coil-compose:2.2.2")
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
     implementation("com.google.accompanist:accompanist-pager:$accompanist_version") // Pager
     implementation("com.google.accompanist:accompanist-pager-indicators:$accompanist_version") // Pager Indicators
-
     implementation("com.google.accompanist:accompanist-swiperefresh:0.24.13-rc") // Swipe to refresh
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1") // system bars customization
+
     implementation("com.github.madrapps:plot:0.1.1") // Line Charts
 
-    // system bars customization
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
+    // Compose Dialog - https://github.com/maxkeppeler/sheets-compose-dialogs
+    implementation("com.maxkeppeler.sheets-compose-dialogs:core:1.1.1") // CORE
+    implementation("com.maxkeppeler.sheets-compose-dialogs:calendar:1.1.1") // CALENDAR
+    implementation("com.maxkeppeler.sheets-compose-dialogs:clock:1.1.1") // CLOCK
+    //implementation("com.maxkeppeler.sheets-compose-dialogs:date-time:1.1.1") // DATE-TIME
 }

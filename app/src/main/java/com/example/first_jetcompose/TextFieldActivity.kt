@@ -165,13 +165,9 @@ fun TxtFieldLayout() {
             placeholder = { Text(text = "Enter your password") },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Search
+                imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
-                onSearch = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
-                },
                 onDone = {
                     keyboardController?.hide()
                     focusManager.clearFocus()

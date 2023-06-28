@@ -95,6 +95,7 @@ fun HomeLayout() {
                 "Dialog Activity" to FullScreenDialogActivity::class.java,
                 "Custom Radio Button Activity" to CustomRadioButton::class.java,
                 "Custom Checkbox Activity" to CustomCheckboxActivity::class.java,
+                "Pickers Activity" to PickerActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
