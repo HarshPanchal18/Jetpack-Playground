@@ -3,6 +3,7 @@ val nav_compose_version = "2.4.0-alpha10"
 //def nav_compose_version = "2.5.0"//-alpha02" // Use the appropriate version that matches your Jetpack Compose version
 val nav_version = "2.5.3"
 val accompanist_version = "0.28.0"
+val dialogVersion = "1.1.1"
 
 plugins {
     id("com.android.application")
@@ -97,8 +98,11 @@ dependencies {
     implementation("com.github.madrapps:plot:0.1.1") // Line Charts
 
     // Compose Dialog - https://github.com/maxkeppeler/sheets-compose-dialogs
-    implementation("com.maxkeppeler.sheets-compose-dialogs:core:1.1.1") // CORE
-    implementation("com.maxkeppeler.sheets-compose-dialogs:calendar:1.1.1") // CALENDAR
-    implementation("com.maxkeppeler.sheets-compose-dialogs:clock:1.1.1") // CLOCK
-    //implementation("com.maxkeppeler.sheets-compose-dialogs:date-time:1.1.1") // DATE-TIME
+    //implementation("com.maxkeppeler.sheets-compose-dialogs:core:1.1.1") // CORE
+    implementation("com.maxkeppeler.sheets-compose-dialogs:calendar:$dialogVersion") // CALENDAR
+    implementation("com.maxkeppeler.sheets-compose-dialogs:clock:$dialogVersion") // CLOCK
+    implementation("com.maxkeppeler.sheets-compose-dialogs:date-time:$dialogVersion") // DATE-TIME
+    implementation("com.maxkeppeler.sheets-compose-dialogs:color:$dialogVersion") // COLOR
+    implementation("com.maxkeppeler.sheets-compose-dialogs:duration:$dialogVersion") // DURATION
+    implementation("com.maxkeppeler.sheets-compose-dialogs:input:$dialogVersion") // INPUT
 }

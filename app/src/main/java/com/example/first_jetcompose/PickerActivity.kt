@@ -10,7 +10,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -18,12 +17,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
@@ -32,8 +33,24 @@ import com.maxkeppeler.sheets.calendar.models.CalendarStyle
 import com.maxkeppeler.sheets.clock.ClockDialog
 import com.maxkeppeler.sheets.clock.models.ClockConfig
 import com.maxkeppeler.sheets.clock.models.ClockSelection
+import com.maxkeppeler.sheets.color.ColorDialog
+import com.maxkeppeler.sheets.color.models.ColorConfig
+import com.maxkeppeler.sheets.color.models.ColorSelection
+import com.maxkeppeler.sheets.color.models.ColorSelectionMode
+import com.maxkeppeler.sheets.color.models.MultipleColors
+import com.maxkeppeler.sheets.color.models.SingleColor
+import com.maxkeppeler.sheets.date_time.DateTimeDialog
+import com.maxkeppeler.sheets.date_time.models.DateTimeSelection
+import com.maxkeppeler.sheets.duration.DurationDialog
+import com.maxkeppeler.sheets.duration.models.DurationConfig
+import com.maxkeppeler.sheets.duration.models.DurationFormat
+import com.maxkeppeler.sheets.duration.models.DurationSelection
+import okhttp3.internal.toHexString
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class PickerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +69,10 @@ class PickerActivity : ComponentActivity() {
                     ) {
                         TimePickerDialogBox()
                         DatePickerDialogScreen()
+                        DateTimePickerDialogBox()
+                        ColorPickerDialog()
+                        ColorPickerDialog2()
+                        DurationDialogBox()
                     }
                 }
             }
@@ -66,17 +87,18 @@ fun TimePickerDialogBox() {
 
     if (pickerOpen) {
         ClockDialog(
-            state = rememberUseCaseState(visible = true, onCloseRequest = {}),
+            state = rememberUseCaseState(
+                visible = true,
+                onCloseRequest = { pickerOpen = !pickerOpen }),
             selection = ClockSelection.HoursMinutesSeconds { hours, minutes, seconds ->
                 selectedTime.value = LocalTime.of(hours, minutes, seconds)
-                pickerOpen = !pickerOpen
             },
             config = ClockConfig(is24HourFormat = true, defaultTime = LocalTime.now()),
         )
     }
 
     Column(
-        modifier = Modifier.padding(20.dp),
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Button(onClick = { pickerOpen = true }) { Text("Open Time Picker") }
@@ -91,11 +113,12 @@ fun DatePickerDialogScreen() {
 
     if (calendarState) {
         CalendarDialog(
-            state = rememberUseCaseState(visible = true, embedded = true, onCloseRequest = {}),
-            selection = CalendarSelection.Date(selectedDate = selectedDate.value) { newDate ->
-                selectedDate.value = newDate
-                calendarState = !calendarState
-            },
+            state = rememberUseCaseState(
+                visible = true,
+                onCloseRequest = { calendarState = !calendarState }),
+            selection = CalendarSelection.Date(
+                selectedDate = selectedDate.value
+            ) { newDate -> selectedDate.value = newDate },
             config = CalendarConfig(yearSelection = true, style = CalendarStyle.MONTH)
         )
     }
@@ -105,7 +128,132 @@ fun DatePickerDialogScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = { calendarState = true }) {Text("Open Date Picker") }
+        Button(onClick = { calendarState = true }) { Text("Open Date Picker") }
         Text(selectedDate.value.toString())
+    }
+}
+
+@Composable
+fun DateTimePickerDialogBox() {
+    var dialogState by remember { mutableStateOf(false) }
+    val selectedDateTime =
+        remember { mutableStateOf<LocalDateTime?>(LocalDateTime.now().plusDays(1)) }
+
+    if (dialogState) {
+        DateTimeDialog(
+            state = rememberUseCaseState(
+                visible = true,
+                onCloseRequest = { dialogState = !dialogState }
+            ),
+            selection = DateTimeSelection.DateTime(
+                selectedTime = selectedDateTime.value?.toLocalTime()
+            ) { newDateTime -> selectedDateTime.value = newDateTime }
+        )
+    }
+
+    Column(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = { dialogState = true }) { Text("Open Date-Time Picker") }
+        Text(selectedDateTime.value.toString())
+    }
+}
+
+val templateColors = MultipleColors.ColorsInt(
+    Color.Red.copy(0.1f).toArgb(),
+    Color.Red.copy(0.3f).toArgb(),
+    Color.Red.copy(0.5f).toArgb(),
+    Color.Red.toArgb(),
+    Color.Green.toArgb(),
+    Color.Yellow.toArgb(),
+)
+
+@Composable
+fun ColorPickerDialog() {
+    var dialogState by remember { mutableStateOf(false) }
+    val color = remember { mutableStateOf<Int?>(Color.Blue.toArgb()) }
+
+    if (dialogState) {
+        ColorDialog(
+            state = rememberUseCaseState(
+                visible = true,
+                onCloseRequest = { dialogState = !dialogState }),
+            selection = ColorSelection(
+                onSelectColor = { color.value = it },
+                onSelectNone = { color.value = null },
+            ),
+            config = ColorConfig(templateColors = templateColors)
+        )
+    }
+
+    Column(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = { dialogState = true }) { Text("Open Color Picker") }
+        Text(color.value!!.toHexString())
+    }
+}
+
+@Composable
+fun ColorPickerDialog2() {
+    var dialogState by remember { mutableStateOf(false) }
+    val color = remember { mutableStateOf<Int?>(Color.Blue.toArgb()) }
+
+    if (dialogState) {
+        ColorDialog(
+            state = rememberUseCaseState(
+                visible = true,
+                onCloseRequest = { dialogState = !dialogState }),
+            selection = ColorSelection(
+                selectedColor = SingleColor(color.value),
+                onSelectColor = { color.value = it },
+            ),
+            config = ColorConfig(
+                templateColors = templateColors,
+                defaultDisplayMode = ColorSelectionMode.CUSTOM,
+                allowCustomColorAlphaValues = false
+            )
+        )
+    }
+
+    Column(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = { dialogState = true }) { Text("Open Color Picker") }
+        Text(color.value!!.toHexString())
+    }
+}
+
+@Composable
+fun DurationDialogBox() {
+    var dialogState by remember { mutableStateOf(false) }
+    val timeInSeconds = remember { mutableLongStateOf(240) }
+
+    if (dialogState) {
+        DurationDialog(
+            state = rememberUseCaseState(
+                visible = true,
+                onCloseRequest = { dialogState = !dialogState }),
+            selection = DurationSelection { newTime -> timeInSeconds.longValue = newTime },
+            config = DurationConfig(
+                timeFormat = DurationFormat.HH_MM_SS,
+                currentTime = timeInSeconds.longValue
+            )
+        )
+    }
+
+    Column(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = { dialogState = true }) { Text("Open Duration Picker") }
+        Text(timeInSeconds.longValue.toDuration(DurationUnit.SECONDS).toString())
     }
 }
