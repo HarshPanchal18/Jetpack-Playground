@@ -89,13 +89,16 @@ fun HomeLayout() {
                 "OTP TextField Activity" to OtpTextField::class.java,
                 "Circular Bottom Sheet Activity" to CircularRevealWap::class.java,
                 "Chart Activity" to ChartScreen::class.java,
-                "Alert Dialog Activity" to AlertDialogActivity::class.java,
+                "Dialog Activity" to AlertDialogActivity::class.java,
                 "Drop Down Activity" to DropDownActivity::class.java,
                 "Loading Animation Activity" to LoadingAnimationScreen::class.java,
-                "Dialog Activity" to FullScreenDialogActivity::class.java,
-                "Custom Radio Button Activity" to CustomRadioButton::class.java,
+                "Custom Dialog Activity" to FullScreenDialogActivity::class.java,
+                "Custom List Radio Button Activity" to CustomRadioButton::class.java,
                 "Custom Checkbox Activity" to CustomCheckboxActivity::class.java,
                 "Pickers Activity" to PickerActivity::class.java,
+                "Radio and Check Activity" to RadioCheckActivity::class.java,
+                "Custom Pager Indicators Activity" to CustomIndicators::class.java,
+                "Floating Action Button Activity" to FABActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {

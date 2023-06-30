@@ -41,4 +41,7 @@
     <string name="title_activity_arc_progress_bar">ArcProgressBar</string>
     <string name="title_activity_picker">PickerActivity</string>
     <string name="compose_shortcut_short_label1">Go to Main Activity</string>
+    <string name="title_activity_radio_check">RadioCheckActivity</string>
+    <string name="title_activity_custom_indicators">CustomIndicators</string>
+    <string name="title_activity_tool_tip_and_fab">ToolTipAndFAB_Activity</string>
 </resources>
