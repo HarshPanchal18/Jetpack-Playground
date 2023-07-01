@@ -44,4 +44,5 @@
     <string name="title_activity_radio_check">RadioCheckActivity</string>
     <string name="title_activity_custom_indicators">CustomIndicators</string>
     <string name="title_activity_tool_tip_and_fab">ToolTipAndFAB_Activity</string>
+    <string name="title_activity_swipe_to_dismiss">SwipeToDismiss</string>
 </resources>

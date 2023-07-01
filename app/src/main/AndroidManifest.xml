@@ -16,6 +16,11 @@
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
         <activity
+            android:name=".SwipeToDismissActivity"
+            android:exported="false"
+            android:label="@string/title_activity_swipe_to_dismiss"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
             android:name=".FABActivity"
             android:exported="false"
             android:label="@string/title_activity_tool_tip_and_fab"

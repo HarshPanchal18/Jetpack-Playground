@@ -99,6 +99,7 @@ fun HomeLayout() {
                 "Radio and Check Activity" to RadioCheckActivity::class.java,
                 "Custom Pager Indicators Activity" to CustomIndicators::class.java,
                 "Floating Action Button Activity" to FABActivity::class.java,
+                "Swipe to dismiss Activity" to SwipeToDismissActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
@@ -110,7 +111,7 @@ fun HomeLayout() {
                         .padding(horizontal = 10.dp)
                 ) {
                     LazyColumn {
-                        items(activityButtons) { (heading, destination) ->
+                        items(activityButtons.reversed()) { (heading, destination) ->
                             StartActivityButton(heading, destination)
                         }
                     }
