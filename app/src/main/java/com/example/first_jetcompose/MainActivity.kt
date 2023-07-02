@@ -42,6 +42,17 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    private var pressedTime: Long = 0
+    override fun onBackPressed() {
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed()
+            finish()
+        } else {
+            Toast.makeText(baseContext, "Press back again to exit", Toast.LENGTH_SHORT).show()
+        }
+        pressedTime = System.currentTimeMillis()
+    }
 }
 
 data class Message(val author: String, val body: String)
@@ -96,10 +107,12 @@ fun HomeLayout() {
                 "Custom List Radio Button Activity" to CustomRadioButton::class.java,
                 "Custom Checkbox Activity" to CustomCheckboxActivity::class.java,
                 "Pickers Activity" to PickerActivity::class.java,
-                "Radio and Check Activity" to RadioCheckActivity::class.java,
+                "Radios-Checks-Chips Activity" to RadioCheckActivity::class.java,
                 "Custom Pager Indicators Activity" to CustomIndicators::class.java,
                 "Floating Action Button Activity" to FABActivity::class.java,
                 "Swipe to dismiss Activity" to SwipeToDismissActivity::class.java,
+                "Markdown Text Activity" to MarkdownTextActivity::class.java,
+                "Expandable Text Activity" to ExpandableTextActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {

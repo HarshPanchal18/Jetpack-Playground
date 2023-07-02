@@ -107,4 +107,7 @@ dependencies {
     implementation("com.maxkeppeler.sheets-compose-dialogs:color:$dialogVersion") // COLOR
     implementation("com.maxkeppeler.sheets-compose-dialogs:duration:$dialogVersion") // DURATION
     implementation("com.maxkeppeler.sheets-compose-dialogs:input:$dialogVersion") // INPUT
+
+    implementation("com.github.jeziellago:compose-markdown:0.3.4") // Markdown Text
+    implementation("io.github.dokar3:expandabletext:0.3.1") // Expandable Text: https://github.com/dokar3/ExpandableText
 }

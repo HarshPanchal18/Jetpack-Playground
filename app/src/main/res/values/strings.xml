@@ -45,4 +45,6 @@
     <string name="title_activity_custom_indicators">CustomIndicators</string>
     <string name="title_activity_tool_tip_and_fab">ToolTipAndFAB_Activity</string>
     <string name="title_activity_swipe_to_dismiss">SwipeToDismiss</string>
+    <string name="title_activity_markdown_text">MarkdownTextActivity</string>
+    <string name="title_activity_expandable_text">ExpandableTextActivity</string>
 </resources>

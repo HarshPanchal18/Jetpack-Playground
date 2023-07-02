@@ -16,6 +16,16 @@
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
         <activity
+            android:name=".ExpandableTextActivity"
+            android:exported="false"
+            android:label="@string/title_activity_expandable_text"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
+            android:name=".MarkdownTextActivity"
+            android:exported="false"
+            android:label="@string/title_activity_markdown_text"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
             android:name=".SwipeToDismissActivity"
             android:exported="false"
             android:label="@string/title_activity_swipe_to_dismiss"
