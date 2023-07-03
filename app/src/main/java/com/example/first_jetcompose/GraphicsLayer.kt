@@ -1,8 +1,10 @@
 package com.example.first_jetcompose
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -14,10 +16,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
@@ -32,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
 
 class GraphicsLayer : ComponentActivity() {
@@ -58,9 +63,9 @@ private fun GraphicsLayerScreen() {
         it
         Column(
             modifier = Modifier
-                .background("#aa54a2da".color)
+                .background("#aa54a2da".toColor.copy(0.3F))
                 .fillMaxSize()
-                .padding(vertical = 22.dp)
+                .padding(all = 10.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -85,6 +90,7 @@ private fun GraphicsLayerScreen() {
                 superTextWeight = FontWeight.Light
             )
             SubScriptText("Hello ", "World")
+            StyledResourceText()
         }
     }
 }
@@ -304,5 +310,30 @@ fun GraphicsLayerTransformOrigin() {
             transformOrigin = TransformOrigin(2f, 2f),
             clip = true
         )
+    )
+}
+
+@Composable
+fun StyledResourceText() {
+    Text(text = textResource(id = R.string.foo).toString())
+    Spacer(Modifier.height(8.dp))
+    StyledText(textResource(id = R.string.foo))
+}
+
+// To get string id
+@Composable
+@ReadOnlyComposable
+// for functions that only need to be composable in order to read CompositionLocal values,
+// but don't call any other composable functions.
+fun textResource(@StringRes id: Int): CharSequence =
+    LocalContext.current.resources.getText(id)
+
+// Custom Text()
+@Composable
+fun StyledText(text: CharSequence, modifier: Modifier = Modifier) {
+    AndroidView(
+        modifier = modifier,
+        factory = { context -> TextView(context) },
+        update = { it.text = text }
     )
 }

@@ -47,4 +47,11 @@
     <string name="title_activity_swipe_to_dismiss">SwipeToDismiss</string>
     <string name="title_activity_markdown_text">MarkdownTextActivity</string>
     <string name="title_activity_expandable_text">ExpandableTextActivity</string>
+    <string name="title_activity_text_spanning">TextSpanningActivity</string>
+
+    <string name="foo">Sample text with
+        <b>bold styling</b>,
+        <i>Italic styling</i> and,
+        <u>underlined styling</u> to test</string>
+
 </resources>

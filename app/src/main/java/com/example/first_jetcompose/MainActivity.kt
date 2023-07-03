@@ -74,7 +74,7 @@ fun HomeLayout() {
     },
         content = {
             val activityButtons = listOf(
-                "Expand Activity" to SecondActivity::class.java,
+                "Expand Activity with Navigation" to SecondActivity::class.java,
                 "Corner Activity" to BorderActivity::class.java,
                 "Drag Activity" to DraggableActivity::class.java,
                 "Row Grid Activity" to LazyGrid::class.java,
@@ -113,11 +113,11 @@ fun HomeLayout() {
                 "Swipe to dismiss Activity" to SwipeToDismissActivity::class.java,
                 "Markdown Text Activity" to MarkdownTextActivity::class.java,
                 "Expandable Text Activity" to ExpandableTextActivity::class.java,
+                "Text Spanning Activity" to TextSpanningActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
-                Spacer(modifier = Modifier.height(10.dp))
-
+                Spacer(Modifier.height(10.dp))
                 Column(
                     modifier = Modifier
                         .weight(1.3F)
@@ -129,10 +129,10 @@ fun HomeLayout() {
                         }
                     }
                 }
-
                 Column(modifier = Modifier.weight(1F)) { BottomList() }
             }
-        })
+        } // content
+    ) // Scaffold
 }
 
 @Composable
@@ -159,7 +159,7 @@ fun MessageCard(msg: Message) {
             .padding(5.dp)
             .fillMaxWidth()
             .shadow(elevation = 2.dp, shape = RoundedCornerShape(10.dp))
-            .background("#a0ca74".color)
+            .background("#a0ca74".toColor)
             .clickable { mToast(mContext) },
         horizontalArrangement = Arrangement.Center,
     ) {
@@ -172,7 +172,7 @@ fun MessageCard(msg: Message) {
                 .border(2.dp, MaterialTheme.colors.secondary, CircleShape)
         )
 
-        Spacer(modifier = Modifier.width(8.dp)) // Add a horizontal space between the image and the column
+        Spacer(Modifier.width(8.dp)) // Add a horizontal space between the image and the column
         var isExpanded by remember { mutableStateOf(false) } // We keep track if the message is expanded or not in this variable
 
         // surfaceColor will be updated gradually from one color to the other
@@ -187,7 +187,7 @@ fun MessageCard(msg: Message) {
                 style = MaterialTheme.typography.subtitle1,
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(4.dp)) // Add a vertical space between the author and message texts
+            Spacer(Modifier.height(4.dp)) // Add a vertical space between the author and message texts
             Surface(
                 shape = MaterialTheme.shapes.medium, elevation = 1.dp,
                 color = surfaceColor,
@@ -240,4 +240,4 @@ fun StartActivityButton(
 
 // Adding extension for apply the HexCoded color
 // .background("HEX-CODE".color)
-val String.color get() = Color(parseColor(this))
+val String.toColor get() = Color(parseColor(this))
