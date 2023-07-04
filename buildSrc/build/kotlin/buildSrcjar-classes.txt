@@ -1,0 +1,1 @@
+C:\dev\Jetpack-Playground\buildSrc\build\classes\kotlin\main\BuildDepenedencyVersions.class;C:\dev\Jetpack-Playground\buildSrc\build\classes\kotlin\main\BuildPlugins.class

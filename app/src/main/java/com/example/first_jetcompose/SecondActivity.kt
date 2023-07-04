@@ -30,14 +30,14 @@ class SecondActivity : ComponentActivity() {
         setContent {
             FirstjetcomposeTheme {
                 // A surface container using the 'background' color from the theme
-                MyApp(modifier=Modifier.fillMaxSize())
+                MyApp(modifier = Modifier.fillMaxSize())
             }
         }
     }
 }
 
 @Composable
-fun Greetings(
+private fun Greetings(
     modifier: Modifier = Modifier,
     names: List<String> = List(10) { "$it" }
 ) {
@@ -55,8 +55,9 @@ fun Greetings(
 }
 
 @Composable
-fun Greeting(name: String) {
-    Card(backgroundColor = MaterialTheme.colors.primary,
+private fun Greeting(name: String) {
+    Card(
+        backgroundColor = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         CardContent(name)
@@ -67,57 +68,59 @@ fun Greeting(name: String) {
 fun CardContent(name: String) {
     var expanded by remember { mutableStateOf(false) } // State and MutableState are interfaces that hold some value and trigger UI updates (recompositions) whenever that value changes.
     // remember is used to guard against recomposition, so the state is not reset.
-    /*
-    The reason why mutating this variable does not trigger recompositions is that
-    it's not being tracked by Compose.
+    /*The reason why mutating this variable does not trigger recompositions is that it's not being tracked by Compose.
     Also, each time Greeting is called, the variable will be reset to false.
     To add internal state to a composable, you can use the mutableStateOf function,
-    which makes Compose recompose functions that read that State.
-    */
+    which makes Compose recompose functions that read that State.*/
 
     val extraPadding by animateDpAsState(
-        if(expanded) 48.dp else 0.dp,
+        if (expanded) 48.dp else 0.dp,
         animationSpec = spring(
             // animateDpAsState takes an optional animationSpec parameter that lets you customize the animation.
             // Let's do something more fun like adding a spring-based animation:
-            /*
-            Any animation created with animate*AsState is interruptible.
+            /*Any animation created with animate*AsState is interruptible.
             This means that if the target value changes in the middle of the animation,
             animate*AsState restarts the animation and points to the new value.
-            Interruptions look especially natural with spring-based animations
-            */
+            Interruptions look especially natural with spring-based animations*/
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessMedium
         )
     )
 
-    Row(modifier = Modifier
-        .padding(12.dp)
-        .animateContentSize(
-            animationSpec = spring(
-                dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessLow
+    Row(
+        modifier = Modifier
+            .padding(12.dp)
+            .animateContentSize(
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessLow
+                )
             )
-        )
     ) {
-        Column(modifier = Modifier
-            .weight(1f)
-            .padding(bottom = extraPadding.coerceAtLeast(0.dp))
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(bottom = extraPadding.coerceAtLeast(0.dp))
         ) {
             Text(text = "Hello ")
-            Text(text = "$name!",
-                style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraBold))
-            if(expanded) {
-                Text(text = ("Composem ipsum color sit lazy, " +
-                        "padding theme elit, sed do bouncy.\n").repeat(4))
+            Text(
+                text = "$name!",
+                style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraBold)
+            )
+            if (expanded) {
+                Text(
+                    text = ("Composem ipsum color sit lazy, " +
+                            "padding theme elit, sed do bouncy.\n").repeat(4)
+                )
             }
         }
         IconButton(onClick = { expanded = !expanded }) {
-            Icon(imageVector =
-            if (expanded)
-                Icons.Filled.ExpandLess
-            else
-                Icons.Filled.ExpandMore,
+            Icon(
+                imageVector =
+                if (expanded)
+                    Icons.Filled.ExpandLess
+                else
+                    Icons.Filled.ExpandMore,
                 contentDescription =
                 if (expanded)
                     stringResource(R.string.show_less)
@@ -126,7 +129,6 @@ fun CardContent(name: String) {
             )
         }
     }
-    //}
 }
 
 @Preview
@@ -143,7 +145,7 @@ fun MyApp(modifier: Modifier = Modifier) {
     // Instead of using remember you can use rememberSaveable.
     // This will save each state surviving configuration changes (such as rotations) and process death.
     Surface(modifier) {
-        if(shouldShowOnboarding) {
+        if (shouldShowOnboarding) {
             OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
         } else {
             Greetings()

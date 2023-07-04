@@ -53,5 +53,6 @@
         <b>bold styling</b>,
         <i>Italic styling</i> and,
         <u>underlined styling</u> to test</string>
+    <string name="title_activity_custom_shadow">CustomShadowActivity</string>
 
 </resources>
