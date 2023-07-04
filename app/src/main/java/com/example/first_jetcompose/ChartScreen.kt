@@ -49,7 +49,6 @@ import com.madrapps.plot.line.DataPoint
 import com.madrapps.plot.line.LineGraph
 import com.madrapps.plot.line.LinePlot
 import kotlin.math.atan2
-import kotlin.math.roundToInt
 
 class ChartScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,8 +74,8 @@ class ChartScreen : ComponentActivity() {
                         PieChart()
                         Text("(Pie chart)")
 
-                        PieChart2(modifier = Modifier.padding(20.dp))
-                        Text("(Pie Chart 2")
+                        ClickablePieChart(modifier = Modifier.padding(20.dp))
+                        Text("(Clickable Pie Chart)")
                     }
                 }
             }
@@ -152,8 +151,7 @@ fun PieChart(
     legend: List<String> = listOf("Mango", "Banana", "Apple"),
     size: Dp = 200.dp
 ) {
-    val sumOfValues = values.sum()
-    val proportions = values.map { it * 100 / sumOfValues } // Calculate each proportion value
+    val proportions = values.toPercent() // Calculate each proportion value
     val sweepAngles = proportions.map { 360 * it / 100 } // Convert proportion to angle
 
     Canvas(
@@ -203,21 +201,21 @@ fun DisplayLegend(color: Color, legend: String) {
 private const val chartDegrees = 360f
 private const val emptyIndex = -1
 private const val animationDuration = 800
+
 @Composable
-fun PieChart2(
+fun ClickablePieChart(
     modifier: Modifier = Modifier,
     colors: List<Color> = listOf(Color(0xFF58BDFF), Color(0xFF125B7F), Color(0xFF092D40)),
-    inputValues: List<Float> = listOf(60f, 110f, 20f),
-    textColor: Color = MaterialTheme.colorScheme.primary,
+    inputValues: List<Float> = listOf(60f, 115f, 25f),
+    textColor: Color = Color.White,
     animated: Boolean = true,
-    enableClickInfo: Boolean = true
 ) {
     var startAngle = 270f // Start drawing clockwise (top to right)
-    val proportions = inputValues.map { it * 100 / inputValues.sum() }
+    val proportions = inputValues.toPercent()
     val angleProgress = proportions.map { prop -> chartDegrees * prop / 100 }
     var clickedItemIndex by remember { mutableIntStateOf(emptyIndex) }
     val progressSize =
-        mutableListOf<Float>() // calculate each slice end point in degrees, for handling click position
+        mutableListOf<Float>() // calculate each slice endpoint in degrees, for handling click position
 
     LaunchedEffect(angleProgress) {
         progressSize.add(angleProgress.first())
@@ -285,7 +283,7 @@ fun PieChart2(
             if (clickedItemIndex != emptyIndex) {
                 drawIntoCanvas { canvas ->
                     canvas.nativeCanvas.drawText(
-                        "${proportions[clickedItemIndex].roundToInt()}%", // text:
+                        "${proportions[clickedItemIndex]}%", // text:
                         (canvasSize / 2) + textFontSize / 4, // x:
                         (canvasSize / 2) + textFontSize / 4, // y:
                         textPaint // paint
@@ -305,7 +303,15 @@ fun touchPointToAngle(
 ): Double {
     val x = touchX - (width * 0.5f)
     val y = touchY - (height * 0.5f)
-    var angle = Math.toDegrees(atan2(x.toDouble(), y.toDouble()) + Math.PI / 2)
-    angle = if (angle < 0) angle + chartDegrees else angle
+    // atan2() returns the angle between the positive y-axis and the line connecting the origin to the point (x, y) in radians
+    // Math.toDegrees() takes an angle in radians and returns the equivalent angle in degrees.
+    // Adding Math.PI / 2 because the +ve x-axis is 90 degree counterclockwise from +ve y-axis.
+    // So converting the angle from the positive y-axis to the positive x-axis.
+    var angle = Math.toDegrees(atan2(y.toDouble(), x.toDouble()) + Math.PI / 2)
+    angle = if (angle < 0) angle + chartDegrees else angle // Validation for negative degrees
     return angle
+}
+
+fun List<Float>.toPercent(): List<Float> {
+    return this.map { item -> item * 100 / this.sum() }
 }
