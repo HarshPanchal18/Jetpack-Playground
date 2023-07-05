@@ -34,8 +34,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import android.graphics.Paint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
@@ -48,7 +52,9 @@ import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
 import com.madrapps.plot.line.DataPoint
 import com.madrapps.plot.line.LineGraph
 import com.madrapps.plot.line.LinePlot
+import java.math.RoundingMode
 import kotlin.math.atan2
+import kotlin.random.Random
 
 class ChartScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,14 +74,22 @@ class ChartScreen : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        val paddingOf20 = Modifier.padding(20.dp)
+
                         LineChart()
                         Text("(Line chart)")
 
                         PieChart()
                         Text("(Pie chart)")
 
-                        ClickablePieChart(modifier = Modifier.padding(20.dp))
+                        ClickablePieChart(modifier = paddingOf20)
                         Text("(Clickable Pie Chart)")
+
+                        BarChart(modifier = paddingOf20)
+                        Text("(Bar Chart)")
+
+                        StackedBarChart(modifier = paddingOf20)
+                        Text("(Stacked Bar Chart)")
                     }
                 }
             }
@@ -83,6 +97,7 @@ class ChartScreen : ComponentActivity() {
     }
 }
 
+val random = Random.Default
 private val dataPoints = listOf(
     DataPoint(0f, 0f),
     DataPoint(1f, 20f),
@@ -146,8 +161,8 @@ fun LineChart(list: List<DataPoint> = dataPoints) {
 
 @Composable
 fun PieChart(
-    values: List<Float> = listOf(15f, 30f, 25f),
-    colors: List<Color> = listOf(Color(0xFF58BDFF), Color(0xFF125B7F), Color(0xFF092D40)),
+    values: List<Float> = randomFloatNumbers(3),
+    colors: List<Color> = randomColors(3),
     legend: List<String> = listOf("Mango", "Banana", "Apple"),
     size: Dp = 200.dp
 ) {
@@ -198,6 +213,25 @@ fun DisplayLegend(color: Color, legend: String) {
     }
 }
 
+fun randomFloatNumbers(count: Int) = List(count) { random.nextDouble(0.0, 100.0).toFloat() }
+
+fun randomColors(count: Int): List<Color> {
+    val colors = mutableListOf<Color>()
+    repeat(count) {
+        val red = random.nextInt(256)
+        val green = random.nextInt(256)
+        val blue = random.nextInt(256)
+        val color = Color(red, green, blue)
+        colors.add(color)
+    }
+    return colors
+}
+
+fun List<Float>.toPercent(): List<Float> {
+    return this.map { item -> item * 100 / this.sum() }
+}
+
+// Clickable Pie Chart
 private const val chartDegrees = 360f
 private const val emptyIndex = -1
 private const val animationDuration = 800
@@ -205,13 +239,13 @@ private const val animationDuration = 800
 @Composable
 fun ClickablePieChart(
     modifier: Modifier = Modifier,
-    colors: List<Color> = listOf(Color(0xFF58BDFF), Color(0xFF125B7F), Color(0xFF092D40)),
-    inputValues: List<Float> = listOf(60f, 115f, 25f),
+    colors: List<Color> = randomColors(5),
+    inputValues: List<Float> = randomFloatNumbers(5),
     textColor: Color = Color.White,
     animated: Boolean = true,
 ) {
     var startAngle = 270f // Start drawing clockwise (top to right)
-    val proportions = inputValues.toPercent()
+    val proportions = inputValues.toPercent().map { it.toBigDecimal().setScale(2,RoundingMode.HALF_UP).toFloat() }
     val angleProgress = proportions.map { prop -> chartDegrees * prop / 100 }
     var clickedItemIndex by remember { mutableIntStateOf(emptyIndex) }
     val progressSize =
@@ -312,6 +346,134 @@ fun touchPointToAngle(
     return angle
 }
 
-fun List<Float>.toPercent(): List<Float> {
-    return this.map { item -> item * 100 / this.sum() }
+// Bar chart
+@Composable
+fun BarChart(
+    modifier: Modifier = Modifier,
+    values: List<Float> = randomFloatNumbers(5),
+    maxHeight: Dp = 200.dp
+) {
+    val borderColor = MaterialTheme.colorScheme.primary
+    val density = LocalDensity.current
+    val strokeWidth = with(density) { 1.dp.toPx() }
+
+    Row(
+        modifier = modifier
+            .padding(top = 15.dp)
+            .then(
+                Modifier
+                    .fillMaxWidth()
+                    .height(maxHeight)
+                    .drawBehind {
+                        drawLine( // X-axis
+                            color = borderColor,
+                            start = Offset(0f, size.height),
+                            end = Offset(size.width, size.height),
+                            strokeWidth = strokeWidth
+                        )
+                        drawLine( // Y-axis
+                            color = borderColor,
+                            start = Offset(0f, 0f),
+                            end = Offset(0f, size.height),
+                            strokeWidth = strokeWidth
+                        )
+                    }
+            ),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.Bottom
+    ) {
+        val barColor = randomColors(1)[0]
+        values.forEach { item ->
+            Bar(
+                value = item,
+                color = barColor,
+                maxHeight = maxHeight
+            )
+        }
+    } // Row
+}
+
+@Composable
+fun RowScope.Bar(value: Float, color: Color, maxHeight: Dp) {
+    // Calculating height for each value
+    val itemHeight = remember(value) { value * maxHeight.value / 100 }
+
+    Spacer(
+        modifier = Modifier
+            .padding(horizontal = 5.dp)
+            .height(itemHeight.dp)
+            .weight(1f)
+            .background(color)
+    )
+}
+
+// Stacked bar chart
+data class StackedData(val inputs: List<Float>, val colors: List<Color>)
+
+@Composable
+fun StackedBarChart(
+    modifier: Modifier = Modifier,
+    values: List<StackedData> = stackedBarChartInputs(),
+    maxHeight: Dp = 200.dp
+) {
+    val borderColor = MaterialTheme.colorScheme.primary
+    val density = LocalDensity.current
+    val strokeWidth = with(density) { 1.dp.toPx() }
+
+    Row(
+        modifier = modifier
+            .padding(top = 15.dp)
+            .then(
+                Modifier
+                    .fillMaxWidth()
+                    .height(maxHeight)
+                    .drawBehind {
+                        // draw X-Axis
+                        drawLine(
+                            color = borderColor,
+                            start = Offset(0f, size.height),
+                            end = Offset(size.width, size.height),
+                            strokeWidth = strokeWidth
+                        )
+
+                        // draw Y-Axis
+                        drawLine(
+                            color = borderColor,
+                            start = Offset(0f, 0f),
+                            end = Offset(0f, size.height),
+                            strokeWidth = strokeWidth
+                        )
+                    }
+            ),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.Bottom
+    ) {
+        values.forEach { item ->
+            Column(modifier = Modifier.weight(1f)) {
+                item.inputs.forEachIndexed { index, input ->
+                    val itemHeight = remember(input) { input * maxHeight.value / 100 }
+                    Spacer(
+                        Modifier
+                            .padding(horizontal = 5.dp)
+                            .height(itemHeight.dp)
+                            .fillMaxWidth()
+                            .background(item.colors[index])
+                    )
+                }
+            }
+        } // forEach
+    } // Row
+}
+
+@Composable
+fun stackedBarChartInputs() = (0..5).map {
+    val inputs = (0..2).map { (1..100).random().toFloat() }.toPercent()
+    StackedData(
+        inputs = inputs,
+        colors = listOf(
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.error,
+            MaterialTheme.colorScheme.secondary
+        )
+    )
 }
