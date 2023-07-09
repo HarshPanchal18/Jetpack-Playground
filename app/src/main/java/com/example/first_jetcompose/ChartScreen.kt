@@ -41,6 +41,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
@@ -90,6 +91,9 @@ class ChartScreen : ComponentActivity() {
 
                         StackedBarChart(modifier = paddingOf20)
                         Text("(Stacked Bar Chart)")
+
+                        DonutChart(modifier = paddingOf20)
+                        Text("(Donut Chart)")
                     }
                 }
             }
@@ -231,6 +235,15 @@ fun List<Float>.toPercent(): List<Float> {
     return this.map { item -> item * 100 / this.sum() }
 }
 
+fun List<Float>.withPrecisionOf(scale: Int): List<Float> {
+    return this.map { element ->
+        element.toBigDecimal().setScale(scale, RoundingMode.HALF_UP).toFloat()
+    }
+}
+
+val legend: List<String> =
+    listOf("Mango", "Banana", "Apple", "Watermelon", "Orange", "Strawberry", "Grapes")
+
 // Clickable Pie Chart
 private const val chartDegrees = 360f
 private const val emptyIndex = -1
@@ -245,7 +258,7 @@ fun ClickablePieChart(
     animated: Boolean = true,
 ) {
     var startAngle = 270f // Start drawing clockwise (top to right)
-    val proportions = inputValues.toPercent().map { it.toBigDecimal().setScale(2,RoundingMode.HALF_UP).toFloat() }
+    val proportions = inputValues.toPercent().withPrecisionOf(2)
     val angleProgress = proportions.map { prop -> chartDegrees * prop / 100 }
     var clickedItemIndex by remember { mutableIntStateOf(emptyIndex) }
     val progressSize =
@@ -324,6 +337,12 @@ fun ClickablePieChart(
                     )
                 }
             }
+        }
+    }
+
+    Column {
+        for (i in inputValues.indices) {
+            DisplayLegend(color = colors[i], legend = legend[i])
         }
     }
 }
@@ -476,4 +495,120 @@ fun stackedBarChartInputs() = (0..5).map {
             MaterialTheme.colorScheme.secondary
         )
     )
+}
+
+// Donut Chart
+private val defaultSliceWidth = 20.dp
+private val defaultSlicePadding = 5.dp
+private val defaultSliceClickPadding = 10.dp
+
+@Composable
+fun DonutChart(
+    modifier: Modifier = Modifier,
+    colors: List<Color> = randomColors(5),
+    inputValues: List<Float> = randomFloatNumbers(5),
+    textColor: Color = Color.Blue,
+    sliceWidthDp: Dp = defaultSliceWidth,
+    slicePaddingDp: Dp = defaultSlicePadding,
+    sliceClickPaddingDp: Dp = defaultSliceClickPadding,
+    animated: Boolean = true
+) {
+
+    var startAngle = 270f // Start drawing clockwise (top to right)
+    val proportions = inputValues.toPercent().withPrecisionOf(2)
+    val angleProgress = proportions.map { prop -> chartDegrees * prop / 100 }
+    var clickedItemIndex by remember { mutableIntStateOf(emptyIndex) }
+    val progressSize =
+        mutableListOf<Float>() // calculate each slice endpoint in degrees, for handling click position
+
+    LaunchedEffect(angleProgress) {
+        progressSize.add(angleProgress.first())
+        for (x in 1 until angleProgress.size) {
+            progressSize.add(angleProgress[x] + progressSize[x - 1])
+        }
+    }
+
+    val pathPortion = remember { Animatable(initialValue = 0f) } // Animating each slice
+
+    val density = LocalDensity.current
+
+    //convert dp values to pixels
+    val sliceWidthPx = with(density) { sliceWidthDp.toPx() }
+    val slicePaddingPx = with(density) { slicePaddingDp.toPx() }
+    val sliceClickPaddingPx = with(density) { sliceClickPaddingDp.toPx() }
+
+    // TextStyle
+    val textFontSize = with(density) { 30.dp.toPx() }
+    val textPaint = remember {
+        Paint().apply {
+            color = textColor.toArgb()
+            textSize = textFontSize
+            textAlign = Paint.Align.CENTER
+        }
+    }
+
+    val selectedSliceWidth = sliceWidthPx + sliceClickPaddingPx // slice width when clicked
+
+    // animate chart slices on composition
+    LaunchedEffect(inputValues) {
+        pathPortion.animateTo(1f, animationSpec = tween(if (animated) animationDuration else 0))
+    }
+
+    BoxWithConstraints(modifier = modifier, contentAlignment = Alignment.Center) {
+        val canvasSize = min(constraints.maxWidth, constraints.maxHeight)
+        val padding = canvasSize * slicePaddingPx / 100f
+        val size = Size(canvasSize.toFloat() - padding, canvasSize.toFloat() - padding)
+        val canvasSizeDp = with(density) { canvasSize.toDp() }
+
+        Canvas(
+            modifier = Modifier
+                .size(canvasSizeDp)
+                .pointerInput(inputValues) {
+                    detectTapGestures { offset ->
+                        val clickedAngle = touchPointToAngle(
+                            width = canvasSize.toFloat(),
+                            height = canvasSize.toFloat(),
+                            touchX = offset.x,
+                            touchY = offset.y,
+                            chartDegrees = chartDegrees
+                        )
+                        progressSize.forEachIndexed { index, item ->
+                            if (clickedAngle <= item) {
+                                clickedItemIndex = index
+                                return@detectTapGestures
+                            }
+                        }
+                    }
+                }
+        ) {
+            angleProgress.forEachIndexed { index, angle ->
+                drawArc(
+                    color = colors[index],
+                    startAngle = startAngle,
+                    sweepAngle = angle * pathPortion.value,
+                    useCenter = false,
+                    size = size,
+                    style = Stroke(width = if (clickedItemIndex == index) selectedSliceWidth else sliceWidthPx),
+                    topLeft = Offset(padding / 2, padding / 2)
+                )
+                startAngle += angle
+            }
+
+            if (clickedItemIndex != emptyIndex) {
+                drawIntoCanvas { canvas ->
+                    canvas.nativeCanvas.drawText(
+                        "${proportions[clickedItemIndex]}%", // text:
+                        (canvasSize / 2) + textFontSize / 4, // x:
+                        (canvasSize / 2) + textFontSize / 4, // y:
+                        textPaint // paint
+                    )
+                }
+            }
+        }
+    }
+    Column {
+        for (i in inputValues.indices) {
+            DisplayLegend(color = colors[i], legend = legend[i])
+        }
+    }
 }
