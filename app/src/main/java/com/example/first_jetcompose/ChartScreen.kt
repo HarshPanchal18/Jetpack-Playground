@@ -244,6 +244,7 @@ fun List<Float>.withPrecisionOf(scale: Int): List<Float> {
 val legend: List<String> =
     listOf("Mango", "Banana", "Apple", "Watermelon", "Orange", "Strawberry", "Grapes")
 
+// https://github.com/giorgospat/compose-charts
 // Clickable Pie Chart
 private const val chartDegrees = 360f
 private const val emptyIndex = -1

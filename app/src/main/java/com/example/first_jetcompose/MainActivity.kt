@@ -114,6 +114,7 @@ fun HomeLayout() {
                 "Markdown Text Activity" to MarkdownTextActivity::class.java,
                 "Expandable Text Activity" to ExpandableTextActivity::class.java,
                 "Text Spanning Activity" to TextSpanningActivity::class.java,
+                "Segmented Control Activity" to SegmentedControlActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {

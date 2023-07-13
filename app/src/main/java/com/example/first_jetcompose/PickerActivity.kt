@@ -10,6 +10,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -23,8 +26,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
@@ -45,6 +53,10 @@ import com.maxkeppeler.sheets.duration.DurationDialog
 import com.maxkeppeler.sheets.duration.models.DurationConfig
 import com.maxkeppeler.sheets.duration.models.DurationFormat
 import com.maxkeppeler.sheets.duration.models.DurationSelection
+import com.vsnappy1.datepicker.DatePicker
+import com.vsnappy1.datepicker.data.DefaultDatePickerConfig
+import com.vsnappy1.datepicker.data.model.DefaultDate
+import com.vsnappy1.datepicker.ui.model.DatePickerConfiguration
 import okhttp3.internal.toHexString
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -73,6 +85,7 @@ class PickerActivity : ComponentActivity() {
                         ColorPickerDialog()
                         ColorPickerDialog2()
                         DurationDialogBox()
+                        DatePickerDialogScreen2()
                     }
                 }
             }
@@ -255,5 +268,48 @@ fun DurationDialogBox() {
     ) {
         Button(onClick = { dialogState = true }) { Text("Open Duration Picker") }
         Text(timeInSeconds.longValue.toDuration(DurationUnit.SECONDS).toString())
+    }
+}
+
+@Composable
+fun DatePickerDialogScreen2() {
+    var calendarState by remember { mutableStateOf(false) }
+    val selectedDate = remember { mutableStateOf(LocalDate.now().minusDays(3)) }
+
+    if (calendarState) {
+        Dialog(
+            onDismissRequest = { calendarState = false },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            DatePicker(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .height(300.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color.White),
+                onDateSelected = { y, m, d -> selectedDate.value = LocalDate.of(y, m, d) },
+                date = DefaultDate.defaultDate,
+                configuration = DatePickerConfiguration.Builder()
+                    .dateTextStyle(
+                        DefaultDatePickerConfig.dateTextStyle.copy(
+                            color = Color(
+                                0xFF333333
+                            )
+                        )
+                    )
+                    .selectedDateTextStyle(textStyle = TextStyle(Color(0xFFFFFFFF)))
+                    .selectedDateBackgroundColor(Color(0xFF64DD17))
+                    .build()
+            )
+        }
+    }
+
+    Column(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = { calendarState = true }) { Text("Open Date Picker") }
+        Text(selectedDate.value.toString())
     }
 }

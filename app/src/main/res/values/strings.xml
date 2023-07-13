@@ -55,5 +55,6 @@
         <u>underlined styling</u> to test</string>
     <string name="title_activity_custom_shadow">CustomShadowActivity</string>
     <string name="title_activity_auto_scrolling_list">AutoScrollingListActivity</string>
+    <string name="title_activity_segmented_control">SegmentedControlActivity</string>
 
 </resources>

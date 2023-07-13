@@ -74,10 +74,12 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
@@ -110,4 +112,5 @@ dependencies {
 
     implementation("com.github.jeziellago:compose-markdown:0.3.4") // Markdown Text
     implementation("io.github.dokar3:expandabletext:0.3.1") // Expandable Text: https://github.com/dokar3/ExpandableText
+    implementation("com.github.vsnappy1:ComposeDatePicker:2.2.0")
 }
