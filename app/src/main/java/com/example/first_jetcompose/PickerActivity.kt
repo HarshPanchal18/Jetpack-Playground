@@ -2,16 +2,26 @@
 
 package com.example.first_jetcompose
 
+import android.net.Uri
 import android.os.Bundle
 import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,10 +39,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
 import com.maxkeppeler.sheets.calendar.CalendarDialog
 import com.maxkeppeler.sheets.calendar.models.CalendarConfig
@@ -57,6 +71,11 @@ import com.vsnappy1.datepicker.DatePicker
 import com.vsnappy1.datepicker.data.DefaultDatePickerConfig
 import com.vsnappy1.datepicker.data.model.DefaultDate
 import com.vsnappy1.datepicker.ui.model.DatePickerConfiguration
+import com.vsnappy1.timepicker.TimePicker
+import com.vsnappy1.timepicker.data.DefaultTimePickerConfig
+import com.vsnappy1.timepicker.data.model.TimePickerTime
+import com.vsnappy1.timepicker.enums.MinuteGap
+import com.vsnappy1.timepicker.ui.model.TimePickerConfiguration
 import okhttp3.internal.toHexString
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -75,7 +94,9 @@ class PickerActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 8.dp),
                         verticalArrangement = Arrangement.SpaceEvenly,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -86,6 +107,10 @@ class PickerActivity : ComponentActivity() {
                         ColorPickerDialog2()
                         DurationDialogBox()
                         DatePickerDialogScreen2()
+                        TimePickerDialogScreen2()
+                        ImagePicker()
+                        MultipleImagePicker()
+                        DocumentPicker()
                     }
                 }
             }
@@ -110,12 +135,20 @@ fun TimePickerDialogBox() {
         )
     }
 
-    Column(
+    Row(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
-        Button(onClick = { pickerOpen = true }) { Text("Open Time Picker") }
-        Text(selectedTime.value.toString())
+        Button(
+            onClick = { pickerOpen = true },
+            modifier = Modifier.weight(1F)
+        ) { Text("Open Time Picker") }
+        Text(
+            text = selectedTime.value.toString(),
+            modifier = Modifier.weight(1F),
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -136,13 +169,20 @@ fun DatePickerDialogScreen() {
         )
     }
 
-    Column(
+    Row(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
-        Button(onClick = { calendarState = true }) { Text("Open Date Picker") }
-        Text(selectedDate.value.toString())
+        Button(
+            onClick = { calendarState = true },
+            modifier = Modifier.weight(1F)
+        ) { Text("Open Date Picker") }
+        Text(
+            text = selectedDate.value.toString(),
+            modifier = Modifier.weight(1F),
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -164,13 +204,20 @@ fun DateTimePickerDialogBox() {
         )
     }
 
-    Column(
+    Row(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
-        Button(onClick = { dialogState = true }) { Text("Open Date-Time Picker") }
-        Text(selectedDateTime.value.toString())
+        Button(
+            onClick = { dialogState = true },
+            modifier = Modifier.weight(1F)
+        ) { Text("Open Date-Time Picker") }
+        Text(
+            text = selectedDateTime.value.toString(),
+            modifier = Modifier.weight(1F),
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -201,13 +248,19 @@ fun ColorPickerDialog() {
         )
     }
 
-    Column(
+    Row(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
-        Button(onClick = { dialogState = true }) { Text("Open Color Picker") }
-        Text(color.value!!.toHexString())
+        Button(
+            onClick = { dialogState = true },
+            modifier = Modifier.weight(1F)
+        ) { Text("Open Color Picker") }
+        Text(
+            text = color.value!!.toHexString(), modifier = Modifier.weight(1F),
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -233,13 +286,20 @@ fun ColorPickerDialog2() {
         )
     }
 
-    Column(
+    Row(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
-        Button(onClick = { dialogState = true }) { Text("Open Color Picker") }
-        Text(color.value!!.toHexString())
+        Button(
+            onClick = { dialogState = true },
+            modifier = Modifier.weight(1F)
+        ) { Text("Open Color Picker") }
+        Text(
+            text = color.value!!.toHexString(),
+            modifier = Modifier.weight(1F),
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -261,13 +321,20 @@ fun DurationDialogBox() {
         )
     }
 
-    Column(
+    Row(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
-        Button(onClick = { dialogState = true }) { Text("Open Duration Picker") }
-        Text(timeInSeconds.longValue.toDuration(DurationUnit.SECONDS).toString())
+        Button(
+            onClick = { dialogState = true },
+            modifier = Modifier.weight(1F)
+        ) { Text("Open Duration Picker") }
+        Text(
+            text = timeInSeconds.longValue.toDuration(DurationUnit.SECONDS).toString(),
+            modifier = Modifier.weight(1F),
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -291,11 +358,7 @@ fun DatePickerDialogScreen2() {
                 date = DefaultDate.defaultDate,
                 configuration = DatePickerConfiguration.Builder()
                     .dateTextStyle(
-                        DefaultDatePickerConfig.dateTextStyle.copy(
-                            color = Color(
-                                0xFF333333
-                            )
-                        )
+                        DefaultDatePickerConfig.dateTextStyle.copy(color = Color(0xFF333333))
                     )
                     .selectedDateTextStyle(textStyle = TextStyle(Color(0xFFFFFFFF)))
                     .selectedDateBackgroundColor(Color(0xFF64DD17))
@@ -304,12 +367,149 @@ fun DatePickerDialogScreen2() {
         }
     }
 
-    Column(
+    Row(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
-        Button(onClick = { calendarState = true }) { Text("Open Date Picker") }
-        Text(selectedDate.value.toString())
+        Button(
+            onClick = { calendarState = true },
+            modifier = Modifier.weight(1F)
+        ) { Text("Open Date Picker") }
+        Text(
+            text = selectedDate.value.toString(), modifier = Modifier.weight(1F),
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun TimePickerDialogScreen2() {
+    var calendarState by remember { mutableStateOf(false) }
+    val selectedTime = remember { mutableStateOf(LocalTime.now().withNano(0)) }
+
+    if (calendarState) {
+        Dialog(
+            onDismissRequest = { calendarState = false },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            TimePicker(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .height(300.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Color.White),
+                onTimeSelected = { h, m -> selectedTime.value = LocalTime.of(h, m) },
+                //is24Hour = true,
+                minuteGap = MinuteGap.ONE,
+                time = TimePickerTime.getTime(),
+                configuration = TimePickerConfiguration.Builder()
+                    .timeTextStyle(
+                        DefaultTimePickerConfig.timeTextStyle.copy(color = Color(0xFF333333))
+                    )
+                    .selectedTimeTextStyle(textStyle = TextStyle(Color(0xFFFF0074)))
+                    .numberOfTimeRowsDisplayed(count = 5)
+                    .selectedTimeScaleFactor(scaleFactor = 1.4F)
+                    .build()
+            )
+        }
+    }
+
+    Row(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Button(
+            onClick = { calendarState = true },
+            modifier = Modifier.weight(1F)
+        ) { Text("Open Time Picker") }
+        Text(
+            text = selectedTime.value.toString(), modifier = Modifier.weight(1F),
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun ImagePicker() {
+    val result = remember { mutableStateOf<Uri?>(null) }
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { result.value = it }
+    )
+
+    Row {
+        Button(onClick = {
+            launcher.launch(
+                PickVisualMediaRequest(mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly) // .VideoOnly for Picking Video file
+            )
+        }, modifier = Modifier.weight(1F)) { Text(text = "Select Image") }
+
+        result.value?.let { image ->
+            val painter = rememberAsyncImagePainter(
+                ImageRequest.Builder(LocalContext.current).data(data = image).build()
+            )
+            Image(
+                painter = painter, null,
+                modifier = Modifier
+                    .size(150.dp, 150.dp)
+                    .padding(8.dp)
+                    .weight(1F)
+            )
+        }
+    }
+}
+
+@Composable
+fun MultipleImagePicker() {
+    val result = remember { mutableStateOf<List<Uri?>?>(null) }
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickMultipleVisualMedia(),
+        onResult = { result.value = it }
+    )
+
+    Row {
+        Button(onClick = {
+            launcher.launch(
+                PickVisualMediaRequest(mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        }, modifier = Modifier.weight(1F)) { Text(text = "Select Multiple Image") }
+
+        result.value?.let { images ->
+            LazyRow(
+                contentPadding = PaddingValues(8.dp),
+                modifier = Modifier.weight(1F)
+            ) {
+                items(images) { item ->
+                    val painter = rememberAsyncImagePainter(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(item).build()
+                    )
+                    Image(
+                        painter = painter, null,
+                        modifier = Modifier.size(150.dp, 150.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DocumentPicker() {
+    val result = remember { mutableStateOf<Uri?>(null) }
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument(),
+        onResult = { result.value = it }
+    )
+
+    Row {
+        Button(onClick = {
+            launcher.launch(arrayOf("application/pdf", "image/png", "image/jpeg"))
+        }, modifier = Modifier.weight(1F)) { Text(text = "Select Document") }
+        result.value?.let { document ->
+            Text(text = "Document Path: ${document.path}", modifier = Modifier.weight(1F))
+        }
     }
 }
