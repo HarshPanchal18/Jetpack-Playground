@@ -16,6 +16,11 @@
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
         <activity
+            android:name=".AccountSwitcherActivity"
+            android:exported="false"
+            android:label="@string/title_activity_account_switcher"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
             android:name=".StickyHeaderActivity"
             android:exported="false"
             android:label="@string/title_activity_sticky_header"
