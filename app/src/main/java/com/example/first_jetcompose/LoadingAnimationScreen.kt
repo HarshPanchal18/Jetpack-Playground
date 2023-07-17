@@ -19,11 +19,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.ProgressIndicatorDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -57,6 +62,7 @@ class LoadingAnimationScreen : ComponentActivity() {
                     DotLoadingAnimation()
                     RippleLoadingAnimation()
                     GradientLoadingAnimation()
+                    LinearProgressIndicatorSample()
                 }
             }
         }
@@ -221,4 +227,29 @@ fun GradientLoadingAnimation(
         strokeWidth = 1.dp,
         color = MaterialTheme.colorScheme.background
     )
+}
+
+@Composable
+fun LinearProgressIndicatorSample() {
+    var progress by remember { mutableFloatStateOf(0.1F) }
+    val animatedProgress = animateFloatAsState(
+        targetValue = progress,
+        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+    ).value
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Spacer(Modifier.height(10.dp))
+        Text("LinearProgressIndicator with undefined progress")
+        LinearProgressIndicator()
+
+        Spacer(Modifier.height(20.dp))
+        Text("LinearProgressIndicator with progress set by button")
+        LinearProgressIndicator(progress = animatedProgress)
+
+        Spacer(Modifier.height(10.dp))
+        Row {
+            OutlinedButton(onClick = { if (progress < 1f) progress += 0.1f }) { Text("Increase") }
+            OutlinedButton(onClick = { if (progress > 0f) progress -= 0.1f }) { Text("Decrease") }
+        }
+    }
 }

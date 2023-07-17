@@ -9,6 +9,7 @@ import android.graphics.Color.parseColor
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
@@ -28,7 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
 import com.example.first_jetcompose.ui.theme.SampleData
@@ -39,25 +39,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             FirstjetcomposeTheme {
                 HomeLayout()
+                var pressedTime: Long = 0
+                BackHandler(enabled = true) {
+                    if (pressedTime + 2000 > System.currentTimeMillis()) finish()
+                    else Toast.makeText(baseContext, "Press back again to exit", Toast.LENGTH_SHORT).show()
+                    pressedTime = System.currentTimeMillis()
+                }
             }
         }
-    }
-
-    private var pressedTime: Long = 0
-    override fun onBackPressed() {
-        if (pressedTime + 2000 > System.currentTimeMillis()) {
-            super.onBackPressed()
-            finish()
-        } else {
-            Toast.makeText(baseContext, "Press back again to exit", Toast.LENGTH_SHORT).show()
-        }
-        pressedTime = System.currentTimeMillis()
     }
 }
 
 data class Message(val author: String, val body: String)
 
-@Preview
 @Composable
 fun HomeLayout() {
     Scaffold(topBar = {
@@ -107,7 +101,7 @@ fun HomeLayout() {
                 "Custom List Radio Button Activity" to CustomRadioButton::class.java,
                 "Custom Checkbox Activity" to CustomCheckboxActivity::class.java,
                 "Pickers Activity" to PickerActivity::class.java,
-                "Radios-Checks-Chips Activity" to RadioCheckActivity::class.java,
+                "Radios-Checks-Chips-Slider Activity" to RadioCheckActivity::class.java,
                 "Custom Pager Indicators Activity" to CustomIndicators::class.java,
                 "Floating Action Button Activity" to FABActivity::class.java,
                 "Swipe to dismiss Activity" to SwipeToDismissActivity::class.java,

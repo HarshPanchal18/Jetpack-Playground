@@ -29,6 +29,7 @@ import androidx.compose.material3.InputChip
 import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Slider
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -36,6 +37,7 @@ import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -63,6 +65,8 @@ class RadioCheckActivity : ComponentActivity() {
                         RadioButtonScreen()
                         TriCheckBoxScreen()
                         ChipsRow()
+                        SliderDemo()
+                        SteppedSliderDemo()
                     }
                 }
             }
@@ -226,6 +230,35 @@ fun ChipsRow() {
             onClick = {},
             label = { Text("Suggestion Chip") },
             modifier = Modifier.padding(start = 8.dp)
+        )
+    }
+}
+
+@Composable
+fun SliderDemo() {
+    var sliderPosition by remember { mutableFloatStateOf(0f) }
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = (sliderPosition * 100).toString())
+        Slider(
+            value = sliderPosition,
+            onValueChange = { sliderPosition = it },
+            modifier = Modifier.padding(horizontal = 10.dp),
+        )
+    }
+}
+
+@Composable
+fun SteppedSliderDemo() {
+    var sliderPosition by remember { mutableFloatStateOf(0f) }
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = (sliderPosition * 100).toString())
+        Slider(
+            value = sliderPosition,
+            onValueChange = { sliderPosition = it },
+            modifier = Modifier.padding(horizontal = 10.dp),
+            steps = 4
         )
     }
 }

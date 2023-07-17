@@ -9,11 +9,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +47,8 @@ class FABActivity : ComponentActivity() {
                         ColouredFAB()
                         ElevatedFAB()
                         RectangularFAB()
+                        ExtendedFAB()
+                        BadgeBoxDemo()
                     }
                 }
             }
@@ -49,21 +58,13 @@ class FABActivity : ComponentActivity() {
 
 @Composable
 fun IconFAB() {
-    FloatingActionButton(onClick = {}) {
-        Icon(
-            imageVector = Icons.Outlined.Star,
-            contentDescription = "Icon FAB"
-        )
-    }
+    FloatingActionButton(onClick = {}) { Icon(Icons.Outlined.Star, "Icon FAB") }
 }
 
 @Composable
 fun ColouredFAB() {
     FloatingActionButton(onClick = {}, contentColor = Color.White, containerColor = Color.Red) {
-        Icon(
-            imageVector = Icons.Outlined.Star,
-            contentDescription = "Coloured FAB"
-        )
+        Icon(Icons.Outlined.Star, "Coloured FAB")
     }
 }
 
@@ -73,20 +74,29 @@ fun ElevatedFAB() {
         onClick = {},
         shape = CutCornerShape(15.dp),
         elevation = FloatingActionButtonDefaults.elevation(20.dp)
-    ) {
-        Icon(
-            imageVector = Icons.Outlined.Star,
-            contentDescription = "Elevated FAB"
-        )
-    }
+    ) { Icon(Icons.Outlined.Star, "Elevated FAB") }
 }
 
 @Composable
 fun RectangularFAB() {
     FloatingActionButton(onClick = {}, shape = RectangleShape) {
-        Icon(
-            imageVector = Icons.Outlined.Star,
-            contentDescription = "Rectangular FAB"
-        )
+        Icon(Icons.Outlined.Star, "Rectangular FAB")
     }
+}
+
+@Composable
+fun ExtendedFAB() {
+    ExtendedFloatingActionButton(
+        text = { Text("Extended FAB") },
+        icon = { Icon(Icons.Default.Message, "Extended FAB") },
+        onClick = {}
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BadgeBoxDemo() {
+    BadgedBox(badge = {
+        Badge { Text("8") }
+    }) { Icon(Icons.Default.Favorite, "Favourite with notification") }
 }
