@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.first_jetcompose">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,6 +16,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
+        <activity
+            android:name=".PythonExecuteActivity"
+            android:exported="false"
+            android:label="@string/title_activity_python_execute"
+            android:theme="@style/Theme.Firstjetcompose" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="your API key" />
+
+        <activity
+            android:name=".MapActivity"
+            android:exported="false"
+            android:label="@string/title_activity_map"
+            android:theme="@style/Theme.Firstjetcompose" />
+        <activity
+            android:name=".CustomAppbar"
+            android:exported="false"
+            android:label="@string/title_activity_custom_appbar"
+            android:theme="@style/Theme.Firstjetcompose" />
         <activity
             android:name=".AccountSwitcherActivity"
             android:exported="false"

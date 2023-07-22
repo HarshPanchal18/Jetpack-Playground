@@ -110,7 +110,9 @@ fun HomeLayout() {
                 "Text Spanning Activity" to TextSpanningActivity::class.java,
                 "Segmented Control Activity" to SegmentedControlActivity::class.java,
                 "Sticky Header Activity" to StickyHeaderActivity::class.java,
-                "Account Swithcer Activity" to AccountSwitcherActivity::class.java,
+                "Account Switcher Activity" to AccountSwitcherActivity::class.java,
+                "Custom Appbar Activity" to CustomAppbar::class.java,
+                "Execute Python Script Activity" to PythonExecuteActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {

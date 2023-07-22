@@ -59,5 +59,8 @@
     <string name="title_activity_sticky_header">StickyHeaderActivity</string>
     <string name="title_activity_login_screen">LoginScreen</string>
     <string name="title_activity_account_switcher">AccountSwitcherActivity</string>
+    <string name="title_activity_custom_appbar">CustomAppbar</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_python_execute">PythonExecuteActivity</string>
 
 </resources>
