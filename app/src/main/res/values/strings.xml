@@ -62,5 +62,8 @@
     <string name="title_activity_custom_appbar">CustomAppbar</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_python_execute">PythonExecuteActivity</string>
+    <string name="title_activity_search_country">SearchCountryActivity</string>
+    <string name="title_activity_navigation_wo_sealed_class">NavigationWoSealedClassActivity
+    </string>
 
 </resources>

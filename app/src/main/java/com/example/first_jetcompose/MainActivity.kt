@@ -112,7 +112,8 @@ fun HomeLayout() {
                 "Sticky Header Activity" to StickyHeaderActivity::class.java,
                 "Account Switcher Activity" to AccountSwitcherActivity::class.java,
                 "Custom Appbar Activity" to CustomAppbar::class.java,
-                "Execute Python Script Activity" to PythonExecuteActivity::class.java,
+                "Search Country Activity" to SearchCountryActivity::class.java,
+                "Navigation with argument Activity" to NavigationWoSealedClassActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {

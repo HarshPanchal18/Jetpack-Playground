@@ -1,7 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.android.ide.common.repository.main
-
 val compose_version = "1.4.0" // Replace with the appropriate version number
 val nav_compose_version = "2.4.0-alpha10"
 //def nav_compose_version = "2.5.0"//-alpha02" // Use the appropriate version that matches your Jetpack Compose version
@@ -12,7 +10,6 @@ val dialogVersion = "1.1.1"
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("com.chaquo.python")
 }
 
 android {
@@ -33,24 +30,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        ndk { // https://chaquo.com/chaquopy/doc/current/android.html
-            abiFilters.apply {
-                add("arm64-v8a")
-                add("x86")
-                add("x86_64")
-            }
-        }
-
-        /*sourceSets{
-            main{
-                python.srcDir "src/main/python"
-            }
-        }
-
-        python {
-            buildPython "/usr/local/bin/python3"
-        }
-        python { version = "3.8" }*/
     }
 
     buildTypes {
@@ -133,7 +112,7 @@ dependencies {
     implementation("io.github.dokar3:expandabletext:0.3.1") // Expandable Text: https://github.com/dokar3/ExpandableText
     implementation("com.github.vsnappy1:ComposeDatePicker:2.2.0")
 
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    /*implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.maps.android:maps-compose:2.11.4")
-    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")*/
 }

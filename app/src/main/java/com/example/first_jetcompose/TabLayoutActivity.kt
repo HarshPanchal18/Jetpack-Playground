@@ -19,7 +19,6 @@ import androidx.compose.material3.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.filled.ArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -60,7 +59,7 @@ class TabLayoutActivity : ComponentActivity() {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun TabLayout() {
+private fun TabLayout() {
     val tabRowItems = listOf(
         TabRowItem("Tab 1",
             Icons.Rounded.Place,
@@ -125,7 +124,7 @@ fun TabLayout() {
 }
 
 @Composable
-fun TopAppBar() {
+private fun TopAppBar() {
     val context = LocalContext.current
     TopAppBar(title = {
         Text(
@@ -137,21 +136,21 @@ fun TopAppBar() {
         contentColor = Color.White,
         navigationIcon = {
             IconButton(onClick = { (context as Activity).finish() }) {
-                Icon(imageVector = Icons.Filled.KeyboardArrowLeft, contentDescription = null,
-                modifier = Modifier.size(32.dp))
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowLeft, contentDescription = null,
+                    modifier = Modifier.size(32.dp)
+                )
             }
         }
     )
 }
 
 @Composable
-fun TabScreen(text: String) {
+private fun TabScreen(text: String) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
-    ) {
-        Text(text, style = MaterialTheme.typography.bodyLarge)
-    }
+    ) { Text(text, style = MaterialTheme.typography.bodyLarge) }
 }
 
 @Preview(showBackground = true)

@@ -26,23 +26,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 
-class MapActivity : ComponentActivity(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener,
-    GoogleMap.OnMarkerDragListener  {
-    private var position = LatLng(34.6767, 33.04455)
+class MapActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +42,7 @@ class MapActivity : ComponentActivity(), OnMapReadyCallback, GoogleMap.OnInfoWin
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Column {
-                        MapsScreen(modifier = Modifier.weight(1F))
+                        //MapsScreen(modifier = Modifier.weight(1F))
                     }
                 }
             }
@@ -62,7 +50,7 @@ class MapActivity : ComponentActivity(), OnMapReadyCallback, GoogleMap.OnInfoWin
     }
 
 
-    @Composable
+    /*@Composable
     fun MapsScreen(modifier: Modifier = Modifier) {
         val initialPosition = LatLng(34.6767, 33.04455)
         var currentPosition by rememberSaveable { mutableStateOf(initialPosition) }
@@ -206,5 +194,5 @@ class MapActivity : ComponentActivity(), OnMapReadyCallback, GoogleMap.OnInfoWin
     override fun onMarkerDragStart(marker: Marker) {
         val position0: LatLng = marker.position
         Log.d(localClassName, "Drag from ${position0.latitude} : ${position0.longitude}")
-    }
+    }*/
 }

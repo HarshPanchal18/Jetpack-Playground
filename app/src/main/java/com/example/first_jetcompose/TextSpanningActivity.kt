@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -101,10 +100,9 @@ fun ImageWithoutBounds(@DrawableRes id: Int) {
             //.wrapContentSize(align = Alignment.TopCenter, unbounded = true)
             //.wrapContentWidth(align = Alignment.Start, unbounded = true)
             //.wrapContentHeight(align = Alignment.Bottom, unbounded = true)
-            .size(300.dp)
-            .background(Color.LightGray)
-            .clip(RoundedCornerShape(percent = 2))
-            .border(width = 5.dp,color = Color.Gray, RoundedCornerShape(percent = 10)),
+            .clip(RoundedCornerShape(percent = 10))
+            .border(width = 5.dp,color = Color.Gray, RoundedCornerShape(percent = 10))
+            .size(300.dp),
         painter = painter,
         contentScale = ContentScale.Crop,
         contentDescription = null
