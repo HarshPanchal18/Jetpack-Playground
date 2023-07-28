@@ -75,10 +75,13 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    implementation("androidx.appcompat:appcompat:1.6.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
@@ -115,4 +118,16 @@ dependencies {
     /*implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.maps.android:maps-compose:2.11.4")
     implementation("com.google.android.gms:play-services-maps:18.1.0")*/
+
+    /*// For Glance support
+    implementation("androidx.glance:glance:1.0.0-beta01")
+
+    // For AppWidgets support
+    implementation("androidx.glance:glance-appwidget:1.0.0-beta01")*/
+
+    // Compose only
+    //implementation("com.leinardi.android:speed-dial.compose:1.0.0-alpha04") // https://github.com/leinardi/FloatingActionButtonSpeedDial
+    //implementation("com.github.leinardi:FloatingActionButtonSpeedDial:master-SNAPSHOT")
+
+    implementation("io.github.jisungbin:timelineview:1.0.2")
 }

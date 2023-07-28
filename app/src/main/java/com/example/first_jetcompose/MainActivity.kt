@@ -114,6 +114,7 @@ fun HomeLayout() {
                 "Custom Appbar Activity" to CustomAppbar::class.java,
                 "Search Country Activity" to SearchCountryActivity::class.java,
                 "Navigation with argument Activity" to NavigationWoSealedClassActivity::class.java,
+                "Timeline Activity" to TimelineViewActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {

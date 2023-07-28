@@ -65,5 +65,6 @@
     <string name="title_activity_search_country">SearchCountryActivity</string>
     <string name="title_activity_navigation_wo_sealed_class">NavigationWoSealedClassActivity
     </string>
+    <string name="title_activity_timeline_view">TimelineViewActivity</string>
 
 </resources>

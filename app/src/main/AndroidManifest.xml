@@ -17,6 +17,11 @@
         android:theme="@style/Theme.Firstjetcompose"
         tools:targetApi="31">
         <activity
+            android:name=".TimelineViewActivity"
+            android:exported="false"
+            android:label="@string/title_activity_timeline_view"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
             android:name=".NavigationWoSealedClassActivity"
             android:exported="false"
             android:label="@string/title_activity_navigation_wo_sealed_class"
