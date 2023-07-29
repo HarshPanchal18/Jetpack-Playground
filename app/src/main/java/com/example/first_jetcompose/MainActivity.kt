@@ -116,6 +116,7 @@ fun HomeLayout() {
                 "Navigation with argument Activity" to NavigationWoSealedClassActivity::class.java,
                 "Timeline Activity" to TimelineViewActivity::class.java,
                 "Nested Navigation Activity" to NestedNavigationActivity::class.java,
+                "Flows Activity" to FlowsActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
