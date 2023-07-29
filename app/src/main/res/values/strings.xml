@@ -66,5 +66,6 @@
     <string name="title_activity_navigation_wo_sealed_class">NavigationWoSealedClassActivity
     </string>
     <string name="title_activity_timeline_view">TimelineViewActivity</string>
+    <string name="title_activity_nested_navigation">NestedNavigationActivity</string>
 
 </resources>

@@ -115,6 +115,7 @@ fun HomeLayout() {
                 "Search Country Activity" to SearchCountryActivity::class.java,
                 "Navigation with argument Activity" to NavigationWoSealedClassActivity::class.java,
                 "Timeline Activity" to TimelineViewActivity::class.java,
+                "Nested Navigation Activity" to NestedNavigationActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
