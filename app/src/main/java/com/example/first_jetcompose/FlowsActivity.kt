@@ -14,13 +14,10 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class FlowsActivity : ComponentActivity() {
 
@@ -36,14 +33,16 @@ class FlowsActivity : ComponentActivity() {
                 ) {
                     LaunchedEffect(Unit) {
                         GlobalScope.launch(Dispatchers.Main) {
-                            try {
-                                flowProducer()
-                                    .collect { //will run on main thread
-                                        Log.d("Collecting", Thread.currentThread().name)
-                                        //throw Exception("Error in collector")
-                                    } // a terminal operator who starts the flow
-                            } catch (e: Exception) {
-                                Log.d("Calling exception from consumer", e.message.toString())
+                            val res = flowProducer()
+                            res.collect {
+                                Log.d("Collecting on flow1", it.toString())
+                            }
+                        }
+                        GlobalScope.launch(Dispatchers.Main) {
+                            val res = flowProducer()
+                            delay(2500)
+                            res.collect {
+                                Log.d("Collecting on flow2", it.toString())
                             }
                         }
                     }
@@ -52,17 +51,15 @@ class FlowsActivity : ComponentActivity() {
         }
     }
 
-    private fun flowProducer() = flow<Int> {
-        val list = listOf(1, 2, 3, 4, 5)
-        repeat(list.size) {
-            delay(1000)
-            Log.d("Emitting", Thread.currentThread().name)
-            emit(it)
-            throw Exception("Error in emitter")
+    private fun flowProducer(): Flow<Int> {
+        val mutableSharedFlow = MutableSharedFlow<Int>(replay = 2) // Replay = capture the last N-missed value from the flow
+        GlobalScope.launch {
+            val list = listOf(1, 2, 3, 4, 5)
+            list.forEach {
+                mutableSharedFlow.emit(it)
+                delay(1000)
+            }
         }
-    }.catch {
-        // Handle the exceptions of producer block instead of passing exception to try..catch block of the consumer
-        Log.d("Emitter catch block", it.message.toString())
-        emit(-1)
+        return mutableSharedFlow
     }
 }
