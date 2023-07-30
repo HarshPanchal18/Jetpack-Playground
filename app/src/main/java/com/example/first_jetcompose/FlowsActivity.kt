@@ -19,11 +19,15 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class FlowsActivity : ComponentActivity() {
 
     private val channel = Channel<Int>()
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,19 +48,27 @@ class FlowsActivity : ComponentActivity() {
                         //val job = GlobalScope.launch {
                         GlobalScope.launch {
                             val data: Flow<Int> = flowProducer()
-                            data.collect {
-                                Log.d("Flow - 1", it.toString())
-                            }
+                            data
+                                .onStart {
+                                    emit(-1) // emitting values on starting of collecting flow
+                                    Log.d("onStart", "Started emitting")
+                                }
+                                .onEach { Log.d("onEach", "Emitting $it") } // skipping the "Emitting - 5" because the completion is below the .onEach{}
+                                .onCompletion {
+                                    emit(5) // emitting values on completion of collecting flow
+                                    Log.d("onCompletion", "Completed emitting")
+                                }
+                                .collect { Log.d("Flow - 1", it.toString()) }
                         }
 
                         // Multiple consumers for the same producer
-                        GlobalScope.launch {
+                        /*GlobalScope.launch {
                             val data: Flow<Int> = flowProducer()
                             delay(2500)
                             data.collect {
                                 Log.d("Flow - 2", it.toString())
                             }
-                        }
+                        }*/
 
                         /*GlobalScope.launch {
                             delay(3500)
