@@ -41,12 +41,27 @@ class FlowsActivity : ComponentActivity() {
                             }
                         }
 
+                        //val job = GlobalScope.launch {
                         GlobalScope.launch {
                             val data: Flow<Int> = flowProducer()
                             data.collect {
-                                Log.d("Flow", it.toString())
+                                Log.d("Flow - 1", it.toString())
                             }
                         }
+
+                        // Multiple consumers for the same producer
+                        GlobalScope.launch {
+                            val data: Flow<Int> = flowProducer()
+                            delay(2500)
+                            data.collect {
+                                Log.d("Flow - 2", it.toString())
+                            }
+                        }
+
+                        /*GlobalScope.launch {
+                            delay(3500)
+                            job.cancel()
+                        }*/
                     }
                     // Channels
                     channelProducer()
@@ -89,7 +104,7 @@ class FlowsActivity : ComponentActivity() {
     }
 
     private fun flowProducer() = flow<Int> {
-        val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+        val list = listOf(1, 2, 3, 4, 5)
         //list.forEach {
         repeat(list.size) {
             delay(1000)
