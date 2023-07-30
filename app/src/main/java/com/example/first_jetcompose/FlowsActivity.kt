@@ -14,6 +14,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -35,23 +36,15 @@ class FlowsActivity : ComponentActivity() {
                 ) {
                     LaunchedEffect(Unit) {
                         GlobalScope.launch(Dispatchers.Main) {
-                            // Context switching
-                            flowProducer()
-                                .map {
-                                    delay(1000)
-                                    it * 2
-                                    Log.d("Map thread", "Map thread" + Thread.currentThread().name)
-                                }
-                                .flowOn(Dispatchers.IO) // will run on IO thread, works on upstream (Decides the context of the above given block)
-                                .filter {
-                                    delay(500)
-                                    Log.d("Filter thread", "Filter thread" + Thread.currentThread().name)
-                                    it < 8
-                                }
-                                .flowOn(Dispatchers.Main) // will run on Main thread
-                                .collect { //will run on main thread
-                                    Log.d("Collecting", Thread.currentThread().name)
-                                } // a terminal operator who starts the flow
+                            try {
+                                flowProducer()
+                                    .collect { //will run on main thread
+                                        Log.d("Collecting", Thread.currentThread().name)
+                                        //throw Exception("Error in collector")
+                                    } // a terminal operator who starts the flow
+                            } catch (e: Exception) {
+                                Log.d("Calling exception from consumer", e.message.toString())
+                            }
                         }
                     }
                 }
@@ -60,20 +53,16 @@ class FlowsActivity : ComponentActivity() {
     }
 
     private fun flowProducer() = flow<Int> {
-        //withContext(Dispatchers.IO) {
-        /*
-        because of:
-        java.lang.IllegalStateException: Flow invariant is violated:
-            Flow was collected in [StandaloneCoroutine{Active}@993c81, Dispatchers.Main],
-            but emission happened in [DispatchedCoroutine{Active}@e744126, Dispatchers.IO].
-            Please refer to 'flow' documentation or use 'flowOn' instead
-        */
         val list = listOf(1, 2, 3, 4, 5)
         repeat(list.size) {
             delay(1000)
             Log.d("Emitting", Thread.currentThread().name)
             emit(it)
+            throw Exception("Error in emitter")
         }
-        //}
+    }.catch {
+        // Handle the exceptions of producer block instead of passing exception to try..catch block of the consumer
+        Log.d("Emitter catch block", it.message.toString())
+        emit(-1)
     }
 }
