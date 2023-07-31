@@ -16,7 +16,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class FlowsActivity : ComponentActivity() {
@@ -31,19 +32,19 @@ class FlowsActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    // Reference - https://www.youtube.com/playlist?list=PLRKyZvuMYSIPJ84lXQSHMn8P-0J8jW5YT
                     LaunchedEffect(Unit) {
                         GlobalScope.launch(Dispatchers.Main) {
                             val res = flowProducer()
+                            delay(6000)
                             res.collect {
-                                Log.d("Collecting on flow1", it.toString())
+                                // `it` will be 30 (as the last state)
+                                Log.d("Collecting", it.toString())
                             }
                         }
                         GlobalScope.launch(Dispatchers.Main) {
-                            val res = flowProducer()
-                            delay(2500)
-                            res.collect {
-                                Log.d("Collecting on flow2", it.toString())
-                            }
+                            val result = flowStateProducer()
+                            Log.d("State producer", result.value.toString())
                         }
                     }
                 }
@@ -52,14 +53,22 @@ class FlowsActivity : ComponentActivity() {
     }
 
     private fun flowProducer(): Flow<Int> {
-        val mutableSharedFlow = MutableSharedFlow<Int>(replay = 2) // Replay = capture the last N-missed value from the flow
+        val mutableStateFlow = MutableStateFlow(10)
         GlobalScope.launch {
-            val list = listOf(1, 2, 3, 4, 5)
-            list.forEach {
-                mutableSharedFlow.emit(it)
-                delay(1000)
-            }
+            delay(2000)
+            mutableStateFlow.emit(20)
+            delay(2000)
+            mutableStateFlow.emit(30)
         }
-        return mutableSharedFlow
+        return mutableStateFlow
+    }
+
+    private fun flowStateProducer(): StateFlow<Int> {
+        val mutableStateFlow = MutableStateFlow(10)
+        GlobalScope.launch {
+            mutableStateFlow.emit(20)
+            mutableStateFlow.emit(30)
+        }
+        return mutableStateFlow
     }
 }
