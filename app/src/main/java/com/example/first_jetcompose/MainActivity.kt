@@ -42,7 +42,8 @@ class MainActivity : ComponentActivity() {
                 var pressedTime: Long = 0
                 BackHandler(enabled = true) {
                     if (pressedTime + 2000 > System.currentTimeMillis()) finish()
-                    else Toast.makeText(baseContext, "Press back again to exit", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(baseContext, "Press back again to exit", Toast.LENGTH_SHORT)
+                        .show()
                     pressedTime = System.currentTimeMillis()
                 }
             }
@@ -117,6 +118,7 @@ fun HomeLayout() {
                 "Timeline Activity" to TimelineViewActivity::class.java,
                 "Nested Navigation Activity" to NestedNavigationActivity::class.java,
                 "Flows Activity" to FlowsActivity::class.java,
+                "Horizontal Pager Activity" to HorizontalPagerActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
@@ -179,7 +181,11 @@ fun MessageCard(msg: Message) {
         var isExpanded by remember { mutableStateOf(false) } // We keep track if the message is expanded or not in this variable
 
         // surfaceColor will be updated gradually from one color to the other
-        val surfaceColor by animateColorAsState(if (isExpanded) MaterialTheme.colors.primary else MaterialTheme.colors.surface)
+        val surfaceColor by animateColorAsState(
+            if (isExpanded) MaterialTheme.colors.primary
+            else MaterialTheme.colors.surface,
+            label = ""
+        )
 
         Column(modifier = Modifier
             .align(Alignment.CenterVertically)

@@ -66,25 +66,22 @@ dependencies {
     implementation("androidx.compose.material:material:$compose_version")
     implementation("androidx.compose.ui:ui-tooling-preview:$compose_version")
     implementation("androidx.compose.foundation:foundation:$compose_version")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime:2.6.1")
     implementation("androidx.activity:activity-compose:1.3.1")
     //implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation("androidx.compose.runtime:runtime-livedata:$compose_version") // for observableAsState()
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    implementation("androidx.compose.ui:ui-util")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
@@ -92,9 +89,9 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:$compose_version")
 
     //implementation("com.android.support:appcompat-v7:28.0.0-rc01")
-    implementation("com.google.accompanist:accompanist-pager:0.22.0-rc")
+    implementation("com.google.accompanist:accompanist-pager:0.28.0")
     //implementation("com.google.accompanist:accompanist-coil:0.22.0-rc")
-    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
@@ -117,10 +114,6 @@ dependencies {
     implementation("com.github.jeziellago:compose-markdown:0.3.4") // Markdown Text
     implementation("io.github.dokar3:expandabletext:0.3.1") // Expandable Text: https://github.com/dokar3/ExpandableText
     implementation("com.github.vsnappy1:ComposeDatePicker:2.2.0")
-
-    /*implementation("com.google.android.gms:play-services-location:21.0.1")
-    implementation("com.google.maps.android:maps-compose:2.11.4")
-    implementation("com.google.android.gms:play-services-maps:18.1.0")*/
 
     /*// For Glance support
     implementation("androidx.glance:glance:1.0.0-beta01")

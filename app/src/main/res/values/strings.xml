@@ -68,5 +68,6 @@
     <string name="title_activity_timeline_view">TimelineViewActivity</string>
     <string name="title_activity_nested_navigation">NestedNavigationActivity</string>
     <string name="title_activity_flows">FlowsActivity</string>
+    <string name="title_activity_horizontal_pager">HorizontalPagerActivity</string>
 
 </resources>
