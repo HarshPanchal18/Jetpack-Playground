@@ -110,11 +110,7 @@ fun ScreenLayout() {
 @Composable
 fun TopBar(title: String = "", buttonIcon: ImageVector, onButtonClicked: () -> Unit) {
     TopAppBar(
-        title = {
-            Text(
-                text = title
-            )
-        },
+        title = { Text(text = title) },
         navigationIcon = {
             IconButton(onClick = { onButtonClicked() }) {
                 Icon(buttonIcon, contentDescription = "")

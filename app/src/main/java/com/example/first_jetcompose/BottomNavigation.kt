@@ -55,17 +55,23 @@ class BottomNavigation : ComponentActivity() {
                                 })
                         },
                         bottomBar = {
-                            val items = listOf(Screen.Account, Screen.Date, Screen.Edit, Screen.ThumpUp)
+                            val items =
+                                listOf(Screen.Account, Screen.Date, Screen.Edit, Screen.ThumpUp)
                             BottomNavigation {
                                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                                 val KEY_ROUTE = "android-support-nav:controller:route"
-                                val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
-                                items.forEach{
+                                val currentRoute =
+                                    navBackStackEntry?.arguments?.getString(KEY_ROUTE)
+                                items.forEach {
                                     BottomNavigationItem(
-                                        icon = { Icon(it.icon,null) },
+                                        icon = { Icon(it.icon, null) },
                                         selected = currentRoute == it.route,
-                                        label = { Text(text = it.label)},
-                                        onClick = { navController.popBackStack(navController.graph.displayName, false)
+                                        label = { Text(text = it.label) },
+                                        onClick = {
+                                            navController.popBackStack(
+                                                navController.graph.displayName,
+                                                false
+                                            )
                                             if (currentRoute != it.route) {
                                                 navController.navigate(it.route)
                                             }

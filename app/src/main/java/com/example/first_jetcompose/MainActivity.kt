@@ -20,6 +20,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Place
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -29,7 +38,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.first_jetcompose.classes.TabRowItem
 import com.example.first_jetcompose.ui.theme.FirstjetcomposeTheme
 import com.example.first_jetcompose.ui.theme.SampleData
 
@@ -53,6 +64,7 @@ class MainActivity : ComponentActivity() {
 
 data class Message(val author: String, val body: String)
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeLayout() {
     Scaffold(topBar = {
@@ -119,6 +131,7 @@ fun HomeLayout() {
                 "Nested Navigation Activity" to NestedNavigationActivity::class.java,
                 "Flows Activity" to FlowsActivity::class.java,
                 "Horizontal Pager Activity" to HorizontalPagerActivity::class.java,
+                "Bottom Navigation Question Activity" to BottomNavi::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
@@ -250,3 +263,51 @@ fun StartActivityButton(
 // Adding extension for apply the HexCoded color
 // .background("HEX-CODE".color)
 val String.toColor get() = Color(parseColor(this))
+
+@Composable
+private fun TabScreen(text: String) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = text,
+            style = androidx.compose.material3.MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+@Preview
+@Composable
+fun Previewscreen() {
+    val tabs = listOf(
+        TabRowItem("Tab 1",
+            Icons.Rounded.Place,
+            Color.White,
+            screen = { TabScreen(text = "Place") }),
+        TabRowItem("Tab 2",
+            Icons.Rounded.Search,
+            Color.Green,
+            screen = { TabScreen(text = "Search") }),
+        TabRowItem("Tab 3",
+            Icons.Rounded.Star,
+            Color.Magenta,
+            screen = { TabScreen(text = "Star") }),
+    )
+    NavigationBar(modifier = Modifier.background(Color.Green)) {
+        tabs.forEach { tab ->
+            NavigationBarItem(label = { Text(tab.title) },
+                icon = { Icon(tab.icon, null) }, onClick = {}, selected = true,
+                /*colors = NavigationBarItemDefaults.colors(
+                    disabledIconColor = Color.Gray,
+                    selectedIconColor = Color.LightGray,
+                    selectedTextColor = Color.Black,
+                    unselectedIconColor = Color.Gray,
+                    unselectedTextColor = Color.LightGray,
+                    disabledTextColor = Color.Gray
+                ),*/
+                modifier = Modifier.background(Color.Yellow).padding(10.dp)
+            )
+        }
+    }
+}
