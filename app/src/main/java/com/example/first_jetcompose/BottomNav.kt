@@ -4,12 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Place
@@ -41,12 +46,22 @@ class BottomNavi : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Scaffold(
-                        modifier = Modifier.padding(10.dp),
+                    /*Scaffold(
+                        //modifier = Modifier.padding(10.dp),
                         bottomBar = {
                             Previewscreens()
                         }
-                    ) { it }
+                    ) {*/
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                //.padding(it)
+                        ) {
+                            Spacer(Modifier.weight(1F))
+                            Previewscreens()
+                            Spacer(Modifier.height(10.dp))
+                        }
+                    //}
                 }
             }
         }
@@ -78,24 +93,75 @@ fun Previewscreens() {
             Icons.Rounded.Search,
             Color.Green,
             screen = { TabScreen(text = "Search") }),
-        /*TabRowItem("Tab 3",
+        TabRowItem("Tab 3",
             Icons.Rounded.Star,
             Color.Magenta,
-            screen = { TabScreen(text = "Star") }),*/
+            screen = { TabScreen(text = "Star") }),
+        TabRowItem("Tab 4",
+            Icons.Rounded.Star,
+            Color.Magenta,
+            screen = { TabScreen(text = "Star") }),
+        TabRowItem("Tab 5",
+            Icons.Rounded.Star,
+            Color.Magenta,
+            screen = { TabScreen(text = "Star") }),
     )
-    NavigationBar(
-        //modifier = Modifier.height(35.dp)
-    ) {
-        tabs.forEach { tab ->
+
+    NavigationBar(modifier = Modifier.height(45.dp)) {
+        tabs.forEach { item ->
             NavigationBarItem(
-                label = { Text(tab.title) },
-                icon = { Icon(tab.icon, null) },
-                onClick = {},
+                icon = {
+                    Icon(
+                        item.icon,
+                        null,
+                        modifier = Modifier.wrapContentHeight(align = Alignment.Bottom,unbounded = false)
+                    )
+                },
+                label = {
+                    Text(
+                        item.title,
+                        modifier = Modifier.wrapContentHeight(align = Alignment.Bottom,unbounded = false)
+                    )
+                },
                 selected = true,
-                modifier = Modifier
-                    .background(Color.Yellow)
-                //.padding(10.dp)
+                onClick = {},
+                modifier = Modifier.background(Color.Yellow)
             )
+        }
+    }
+}
+
+@Composable
+fun CustomNavigationBarItem(
+    icon: @Composable () -> Unit,
+    label: @Composable () -> Unit,
+    selected: Boolean,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    val customPadding = 8.dp//if (selected) 8.dp else 4.dp
+
+    Surface(
+        onClick = onClick,
+        shape = MaterialTheme.shapes.small,
+        color =
+        if (selected) MaterialTheme.colorScheme.primary
+        else MaterialTheme.colorScheme.background,
+        modifier = Modifier
+            .navigationBarsPadding()
+            .padding(horizontal = customPadding)
+            .wrapContentHeight()
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .navigationBarsPadding()
+                .padding(8.dp)
+        ) {
+            icon()
+            Spacer(modifier = Modifier.width(8.dp))
+            label()
         }
     }
 }
