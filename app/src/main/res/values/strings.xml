@@ -70,5 +70,6 @@
     <string name="title_activity_flows">FlowsActivity</string>
     <string name="title_activity_horizontal_pager">HorizontalPagerActivity</string>
     <string name="title_activity_bottom_nav">BottomNav</string>
+    <string name="title_activity_airplane_mode">AirplaneModeActivity</string>
 
 </resources>

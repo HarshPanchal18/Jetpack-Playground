@@ -132,6 +132,7 @@ fun HomeLayout() {
                 "Flows Activity" to FlowsActivity::class.java,
                 "Horizontal Pager Activity" to HorizontalPagerActivity::class.java,
                 "Bottom Navigation Question Activity" to BottomNavi::class.java,
+                "Airplane Mode Broadcast Service Activity" to AirplaneModeActivity::class.java,
             )
 
             Column(modifier = Modifier.padding(it)) {
